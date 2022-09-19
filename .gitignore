@@ -1,2 +1,4 @@
 node_modules
 pageAppAccessToken.txt
+.env
+cspell.json
