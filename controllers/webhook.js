@@ -26,9 +26,9 @@ exports.postWebhook = (req, res) => {
       if (webhookEvent.message) {
         handleMessage(senderPsid, webhookEvent.message);
         console.log("1- event message: ", webhookEvent.message);
-      } else if (webhookEvent.postBack) {
-        handlePostBack(senderPsid, webhookEvent.postBack);
-        console.log("2- event post back: ", webhookEvent.postBack);
+      } else if (webhookEvent.postback) {
+        handlePostBack(senderPsid, webhookEvent.postback);
+        console.log("2- event post back: ", webhookEvent.postback);
       }
     });
     res.status(200).send("EVENT_RECEIVED");
