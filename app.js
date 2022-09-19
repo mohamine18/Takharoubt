@@ -3,6 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const webhookRouter = require("./routes/webhook");
+const homeRouter = require("./routes/home");
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use("/", homeRouter);
 app.use("/webhook", webhookRouter);
 
 module.exports = app;
