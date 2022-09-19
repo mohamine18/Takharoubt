@@ -25,10 +25,8 @@ exports.postWebhook = (req, res) => {
       // CHECK if the event is a message or a post-back and pass the event to the appropriate handler function
       if (webhookEvent.message) {
         handleMessage(senderPsid, webhookEvent.message);
-        console.log("1- event message: ", webhookEvent.message);
       } else if (webhookEvent.postback) {
         handlePostBack(senderPsid, webhookEvent.postback);
-        console.log("2- event post back: ", webhookEvent.postback);
       }
     });
     res.status(200).send("EVENT_RECEIVED");
@@ -48,7 +46,6 @@ const handleMessage = (senderPsid, receivedMessage) => {
   } else if (receivedMessage.attachments) {
     // Get the URL of the message attachment
     let attachmentUrl = receivedMessage.attachments[0].payload.url;
-    console.log("1- attachmentUrl: ", attachmentUrl);
     response = {
       attachment: {
         type: "template",
