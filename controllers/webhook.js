@@ -39,21 +39,31 @@ exports.postWebhook = (req, res) => {
 const handleMessage = (senderPsid, receivedMessage) => {
   let response;
   //Check if the message contain a text
-  if (receivedMessage.text === "مرحبا") {
-    buttons = [
-      {
-        type: "web_url",
-        title: "visit a web site",
-        url: "https://takharoubt-app-aa6ev.ondigitalocean.app/",
-      },
-      {
-        type: "postback",
-        title: "quite a web site",
-        payload: "exit",
-      },
-    ];
-    response = buttonTemplate(buttons, "Please select a value");
-  } else if (receivedMessage.attachments) {
+  switch (receivedMessage.text) {
+    case "مرحبا":
+      buttons = [
+        {
+          type: "web_url",
+          title: "visit a web site",
+          url: "https://takharoubt-app-aa6ev.ondigitalocean.app/",
+        },
+        {
+          type: "postback",
+          title: "quite a web site",
+          payload: "exit",
+        },
+      ];
+      response = buttonTemplate(buttons, "Please select a value");
+      break;
+    // case y:
+    // code block
+    //   break;
+    default:
+      response = {
+        text: `You sent the message: '${receivedMessage.text}'. Now send me an attachment!`,
+      };
+  }
+  if (receivedMessage.attachments) {
     // Get the URL of the message attachment
     // let attachmentUrl = receivedMessage.attachments[0].payload.url;
     buttons = [
