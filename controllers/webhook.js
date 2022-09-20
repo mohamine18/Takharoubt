@@ -1,6 +1,5 @@
 const { callSendAPI } = require("../utils/callSendApi");
-const { genericTemplate } = require("../templates/generic");
-
+const { genericTemplate, buttonTemplate } = require("../utils/template");
 exports.getWebhook = (req, res) => {
   const mode = req.query["hub.mode"];
   const token = req.query["hub.verify_token"];
@@ -40,14 +39,24 @@ exports.postWebhook = (req, res) => {
 const handleMessage = (senderPsid, receivedMessage) => {
   let response;
   //Check if the message contain a text
-  if (receivedMessage.text) {
-    response = {
-      text: `You sent the message: '${receivedMessage.text}'. Now send me an attachment!`,
-    };
+  if (receivedMessage.text === "مرحبا") {
+    buttons = [
+      {
+        type: "web_url",
+        title: "visit a web site",
+        url: "https://takharoubt-app-aa6ev.ondigitalocean.app/",
+      },
+      {
+        type: "postback",
+        title: "quite a web site",
+        payload: "exit",
+      },
+    ];
+    response = buttonTemplate(buttons, "Please select a value");
   } else if (receivedMessage.attachments) {
     // Get the URL of the message attachment
     // let attachmentUrl = receivedMessage.attachments[0].payload.url;
-    listOfButtons = [
+    buttons = [
       {
         type: "postback",
         title: "Yes!",
@@ -59,7 +68,11 @@ const handleMessage = (senderPsid, receivedMessage) => {
         payload: "no",
       },
     ];
-    response = genericTemplate(listOfButtons);
+    response = genericTemplate(
+      buttons,
+      "Is this the right picture?",
+      "Tap a button to answer."
+    );
   }
   // Send the response message
   callSendAPI(senderPsid, response);
