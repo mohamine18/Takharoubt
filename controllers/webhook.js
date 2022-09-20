@@ -1,4 +1,5 @@
-const request = require("request");
+const { callSendAPI } = require("../utils/callSendApi");
+const { genericTemplate } = require("../templates/generic");
 
 exports.getWebhook = (req, res) => {
   const mode = req.query["hub.mode"];
@@ -45,34 +46,20 @@ const handleMessage = (senderPsid, receivedMessage) => {
     };
   } else if (receivedMessage.attachments) {
     // Get the URL of the message attachment
-    let attachmentUrl = receivedMessage.attachments[0].payload.url;
-    response = {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "generic",
-          elements: [
-            {
-              title: "Is this the right picture?",
-              subtitle: "Tap a button to answer.",
-              image_url: attachmentUrl,
-              buttons: [
-                {
-                  type: "postback",
-                  title: "Yes!",
-                  payload: "yes",
-                },
-                {
-                  type: "postback",
-                  title: "No!",
-                  payload: "no",
-                },
-              ],
-            },
-          ],
-        },
+    // let attachmentUrl = receivedMessage.attachments[0].payload.url;
+    listOfButtons = [
+      {
+        type: "postback",
+        title: "Yes!",
+        payload: "yes",
       },
-    };
+      {
+        type: "postback",
+        title: "No!",
+        payload: "no",
+      },
+    ];
+    response = genericTemplate(listOfButtons);
   }
   // Send the response message
   callSendAPI(senderPsid, response);
@@ -94,28 +81,3 @@ const handlePostBack = (senderPsid, receivedPostBack) => {
   callSendAPI(senderPsid, response);
 };
 // Sends response messages via the Send API
-const callSendAPI = (senderPsid, response) => {
-  // Construct the message body
-  let requestBody = {
-    recipient: {
-      id: senderPsid,
-    },
-    message: response,
-  };
-  // Send the HTTP request to the Messenger Platform
-  request(
-    {
-      uri: "https://graph.facebook.com/v2.6/me/messages",
-      qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
-      method: "POST",
-      json: requestBody,
-    },
-    (err, _res, _body) => {
-      if (!err) {
-        console.log("Message sent!");
-      } else {
-        console.error("Unable to send message:" + err);
-      }
-    }
-  );
-};
