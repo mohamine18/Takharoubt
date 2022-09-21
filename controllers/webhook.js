@@ -1,5 +1,11 @@
-const { callSendAPI } = require("../utils/callSendApi");
-const { genericTemplate, buttonTemplate } = require("../utils/template");
+const { text } = require("../utils/text");
+const { callSendAPI, senderAction } = require("../utils/callSendApi");
+const {
+  genericTemplate,
+  buttonTemplate,
+  textTemplate,
+} = require("../utils/template");
+
 exports.getWebhook = (req, res) => {
   const mode = req.query["hub.mode"];
   const token = req.query["hub.verify_token"];
@@ -29,6 +35,7 @@ exports.postWebhook = (req, res) => {
         handlePostBack(senderPsid, webhookEvent.postback);
       }
     });
+    senderAction(senderPsid, "mark_seen");
     res.status(200).send("EVENT_RECEIVED");
   } else {
     res.sendStatus(404);
@@ -36,59 +43,44 @@ exports.postWebhook = (req, res) => {
 };
 
 // Handle messages events
-const handleMessage = (senderPsid, receivedMessage) => {
-  let response;
+const handleMessage = async (senderPsid, receivedMessage) => {
   //Check if the message contain a text
   switch (receivedMessage.text) {
     case "مرحبا":
       buttons = [
         {
           type: "web_url",
-          title: "visit a web site",
+          title: text.createRoom,
           url: "https://takharoubt-app-aa6ev.ondigitalocean.app/",
         },
         {
           type: "postback",
-          title: "quite a web site",
-          payload: "exit",
+          title: text.joinRoom,
+          payload: "joinRoom",
+        },
+        {
+          type: "postback",
+          title: text.joinMosque,
+          payload: "joinMosque",
         },
       ];
-      response = buttonTemplate(buttons, "Please select a value");
+      await callSendAPI(senderPsid, textTemplate(text.marhaba));
+      await callSendAPI(senderPsid, greeting(text.menu));
+      await callSendAPI(
+        senderPsid,
+        genericTemplate(buttons, text.menuTitle, text.menuSubtitle)
+      );
       break;
-    // case y:
-    // code block
-    //   break;
+    case "مساعدة":
+      await callSendAPI(senderPsid, textTemplate(text.help));
+      await callSendAPI(senderPsid, greeting(text.how));
+      break;
     default:
-      response = {
-        text: `You sent the message: '${receivedMessage.text}'. Now send me an attachment!`,
-      };
+      await callSendAPI(senderPsid, textTemplate(text.default));
   }
-  if (receivedMessage.attachments) {
-    // Get the URL of the message attachment
-    // let attachmentUrl = receivedMessage.attachments[0].payload.url;
-    buttons = [
-      {
-        type: "postback",
-        title: "Yes!",
-        payload: "yes",
-      },
-      {
-        type: "postback",
-        title: "No!",
-        payload: "no",
-      },
-    ];
-    response = genericTemplate(
-      buttons,
-      "Is this the right picture?",
-      "Tap a button to answer."
-    );
-  }
-  // Send the response message
-  callSendAPI(senderPsid, response);
 };
 // handle post-back events
-const handlePostBack = (senderPsid, receivedPostBack) => {
+const handlePostBack = async (senderPsid, receivedPostBack) => {
   let response;
 
   // Get the payload for the post-back
@@ -101,6 +93,21 @@ const handlePostBack = (senderPsid, receivedPostBack) => {
     response = { text: "Oops, try sending another image." };
   }
   // Send the message to acknowledge the post-back
-  callSendAPI(senderPsid, response);
+  await callSendAPI(senderPsid, response);
 };
-// Sends response messages via the Send API
+
+const greeting = () => {
+  buttons = [
+    {
+      type: "web_url",
+      title: "visit a web site",
+      url: "https://takharoubt-app-aa6ev.ondigitalocean.app/",
+    },
+    {
+      type: "postback",
+      title: "quite a web site",
+      payload: "exit",
+    },
+  ];
+  return buttonTemplate(buttons, "Please select a value");
+};

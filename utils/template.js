@@ -57,3 +57,7 @@ exports.buttonTemplate = (buttons, text) => {
     },
   };
 };
+
+exports.textTemplate = (text) => {
+  return { text };
+};
