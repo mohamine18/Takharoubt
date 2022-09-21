@@ -1,0 +1,53 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css"
+    />
+    <link rel="stylesheet" href="/css/main.css" />
+    <title>Document</title>
+  </head>
+  <body class="container">
+    <h2>إنشاء ختمة جماعية</h2>
+    <form>
+      <fieldset>
+        <label for="ageRangeField">:طريقة تقسيم القرآن</label>
+        <select id="methodRangeField">
+          <option disabled selected hidden>اختر طريقة تقسيم القرآن</option>
+          <option value="0-13">اثمان</option>
+          <option value="14-17">اجزاء</option>
+          <option value="18-23">احزاب</option>
+        </select>
+        <label for="nameField">:تاريخ انتهاء الختمة</label>
+        <select id="dateExpirationRangeField">
+          <option disabled selected hidden>مدة الختمة الجماعية</option>
+          <option value="0-13">يوم</option>
+          <option value="14-17">ثلاث أيام</option>
+          <option value="18-23">أسبوع</option>
+        </select>
+        <label for="commentField">:الشروط</label>
+        <textarea
+          placeholder="شروط الختمة الجماعية"
+          id="commentField"
+        ></textarea>
+        <div class="formFooter row">
+          <button class="button">إنشاء</button>
+          <button class="button button-outline">إلغاء</button>
+        </div>
+      </fieldset>
+    </form>
+  </body>
+</html>

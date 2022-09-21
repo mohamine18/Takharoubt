@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.route("/").get(homeController.home);
 
+router.route("/create-a-room").get(homeController.createRoom);
+
 module.exports = router;

@@ -1,0 +1,83 @@
+body {
+  font-family: "Amiri", "sans-serif";
+  background-image: url(https://img.freepik.com/free-vector/mandala-illustration_53876-81805.jpg?w=1380&t=st=1663771384~exp=1663771984~hmac=f285195e9d3ac95b37ee187fd4752e23dc02618090499c307cf0f00807ee2355);
+  background-color: #ffffff;
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+.container {
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center;
+  text-align: center; */
+  min-height: 100vh;
+}
+
+@media (max-width: 600px) {
+  body {
+    display: none;
+  }
+}
+
+h2 {
+  text-align: center;
+  color: #009000;
+  margin-bottom: 5rem;
+}
+
+.formFooter {
+  padding-top: 1rem;
+}
+
+form {
+  text-align: right;
+}
+
+.button,
+input[type="submit"] {
+  background-color: #009000;
+  border: #009000;
+  font-size: 1.5rem;
+}
+
+.button.button-outline {
+  background-color: transparent;
+  color: #009000;
+  border: 0.1rem solid #009000;
+}
+
+select {
+  text-align-last: right;
+}
+option {
+  direction: rtl;
+}
+
+textarea {
+  text-align-last: right;
+  direction: rtl;
+}
+
+input[type="date"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="text"]:focus,
+input:not([type]):focus,
+textarea:focus,
+select:focus {
+  border-color: #009000;
+  outline: 0;
+}
+
+select {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 0 30 8" width="30"><path fill="%23d1d1d1" d="M0,0l6,8l6-8"/></svg>')
+    center left no-repeat;
+  padding-right: 1rem;
+}
+
+select:focus {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 0 30 8" width="30"><path fill="green" d="M0,0l6,8l6-8"/></svg>');
+}
