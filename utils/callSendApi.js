@@ -11,24 +11,27 @@ const callSendAPI = (senderPsid, response) => {
   //send a typing indicator
 
   senderAction(senderPsid, "typing_on");
-  setTimeout(() => {
-    request(
-      {
-        uri: process.env.FACEBOOK_URI,
-        qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
-        method: "POST",
-        json: requestBody,
-      },
-      (err, _res, _body) => {
-        if (!err) {
-          console.log("Message sent!");
-          senderAction(senderPsid, "typing_off");
-        } else {
-          console.error("Unable to send message:" + err);
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      request(
+        {
+          uri: process.env.FACEBOOK_URI,
+          qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
+          method: "POST",
+          json: requestBody,
+        },
+        (err, _res, _body) => {
+          if (!err) {
+            console.log("Message sent!");
+            senderAction(senderPsid, "typing_off");
+            resolve("success");
+          } else {
+            console.error("Unable to send message:" + err);
+          }
         }
-      }
-    );
-  }, 2000);
+      );
+    }, 2000);
+  });
 };
 
 const senderAction = (senderPsid, indicator) => {

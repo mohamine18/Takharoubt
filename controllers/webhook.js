@@ -30,7 +30,7 @@ exports.postWebhook = (req, res) => {
       const senderPsid = webhookEvent.sender.id;
       // CHECK if the event is a message or a post-back and pass the event to the appropriate handler function
       if (webhookEvent.message) {
-        senderAction(senderPsid, "mark_seen");
+        0senderAction(senderPsid, "mark_seen");
         handleMessage(senderPsid, webhookEvent.message);
       } else if (webhookEvent.postback) {
         //! senderAction(senderPsid, "mark_seen");
@@ -44,7 +44,7 @@ exports.postWebhook = (req, res) => {
 };
 
 // Handle messages events
-const handleMessage = (senderPsid, receivedMessage) => {
+const handleMessage = async (senderPsid, receivedMessage) => {
   //Check if the message contain a text
   switch (receivedMessage.text) {
     case "مرحبا":
@@ -65,19 +65,19 @@ const handleMessage = (senderPsid, receivedMessage) => {
           payload: "joinMosque",
         },
       ];
-      callSendAPI(senderPsid, textTemplate(text.marhaba));
-      callSendAPI(senderPsid, textTemplate(text.menu));
-      callSendAPI(
+      await callSendAPI(senderPsid, textTemplate(text.marhaba));
+      await callSendAPI(senderPsid, textTemplate(text.menu));
+      await callSendAPI(
         senderPsid,
         genericTemplate(buttons, text.menuTitle, text.menuSubtitle)
       );
       break;
     case "مساعدة":
-      callSendAPI(senderPsid, textTemplate(text.help));
-      callSendAPI(senderPsid, textTemplate(text.how));
+      await callSendAPI(senderPsid, textTemplate(text.help));
+      await callSendAPI(senderPsid, textTemplate(text.how));
       break;
     default:
-      callSendAPI(senderPsid, textTemplate(text.default));
+      await callSendAPI(senderPsid, textTemplate(text.default));
   }
 };
 // handle post-back events
@@ -88,10 +88,15 @@ const handlePostBack = async (senderPsid, receivedPostBack) => {
   let payload = receivedPostBack.payload;
 
   // Set the response based on the post-back payload
-  if (payload === "yes") {
-    response = { text: "Thanks!" };
-  } else if (payload === "no") {
-    response = { text: "Oops, try sending another image." };
+  switch (payload) {
+    case joinRoom:
+      response = { text: "Thanks!" };
+      break;
+    case joinMosque:
+      response = { text: "Oops, try sending another image." };
+      break;
+    default:
+      break;
   }
   // Send the message to acknowledge the post-back
   await callSendAPI(senderPsid, response);
