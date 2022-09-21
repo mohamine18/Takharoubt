@@ -1,6 +1,6 @@
 const request = require("request");
 
-exports.callSendAPI = (senderPsid, response) => {
+const callSendAPI = (senderPsid, response) => {
   // Construct the message body
   let requestBody = {
     recipient: {
@@ -33,7 +33,7 @@ exports.callSendAPI = (senderPsid, response) => {
   });
 };
 
-exports.senderAction = (senderPsid, indicator) => {
+const senderAction = (senderPsid, indicator) => {
   // three indicator 'mark_seen ' 'typing_on', 'typing_off'
   const requestBody = {
     recipient: {
@@ -56,4 +56,9 @@ exports.senderAction = (senderPsid, indicator) => {
       }
     }
   );
+};
+
+module.exports = {
+  callSendAPI,
+  senderAction,
 };
