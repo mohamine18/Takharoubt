@@ -23,6 +23,7 @@ const callSendAPI = (senderPsid, response) => {
         (err, _res, _body) => {
           if (!err) {
             console.log("Message sent!");
+            senderAction(senderPsid, "typing_off");
             resolve("Message sent!");
           } else {
             console.error("Unable to send message:" + err);
@@ -50,7 +51,7 @@ const senderAction = (senderPsid, indicator) => {
     },
     (err, _res, _body) => {
       if (!err) {
-        console.log("Sender Action Message sent!");
+        console.log(`Sender Action ${indicator} Message sent!`);
       } else {
         console.error("Unable to send Sender Action message:" + err);
       }

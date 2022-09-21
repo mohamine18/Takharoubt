@@ -23,16 +23,17 @@ exports.getWebhook = (req, res) => {
 exports.postWebhook = (req, res) => {
   const body = req.body;
   if (body.object === "page") {
-    body.entry.forEach((entry) => {
+    body.entry.forEach(async (entry) => {
       // GET the body of the Webhook Event
       const webhookEvent = entry.messaging[0];
       // GET the sender PSID
       const senderPsid = webhookEvent.sender.id;
+      console.log(senderPsid, webhookEvent);
       // CHECK if the event is a message or a post-back and pass the event to the appropriate handler function
       if (webhookEvent.message) {
-        handleMessage(senderPsid, webhookEvent.message);
+        await handleMessage(senderPsid, webhookEvent.message);
       } else if (webhookEvent.postback) {
-        handlePostBack(senderPsid, webhookEvent.postback);
+        await handlePostBack(senderPsid, webhookEvent.postback);
       }
     });
     senderAction(senderPsid, "mark_seen");
