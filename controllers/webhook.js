@@ -30,7 +30,7 @@ exports.postWebhook = (req, res) => {
       const senderPsid = webhookEvent.sender.id;
       // CHECK if the event is a message or a post-back and pass the event to the appropriate handler function
       if (webhookEvent.message) {
-        0senderAction(senderPsid, "mark_seen");
+        senderAction(senderPsid, "mark_seen");
         handleMessage(senderPsid, webhookEvent.message);
       } else if (webhookEvent.postback) {
         //! senderAction(senderPsid, "mark_seen");
