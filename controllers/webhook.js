@@ -23,20 +23,20 @@ exports.getWebhook = (req, res) => {
 exports.postWebhook = (req, res) => {
   const body = req.body;
   if (body.object === "page") {
-    body.entry.forEach(async (entry) => {
+    body.entry.forEach((entry) => {
       // GET the body of the Webhook Event
       const webhookEvent = entry.messaging[0];
       // GET the sender PSID
       const senderPsid = webhookEvent.sender.id;
-      console.log(senderPsid, webhookEvent);
       // CHECK if the event is a message or a post-back and pass the event to the appropriate handler function
       if (webhookEvent.message) {
-        await handleMessage(senderPsid, webhookEvent.message);
+        //! senderAction(senderPsid, "mark_seen");
+        handleMessage(senderPsid, webhookEvent.message);
       } else if (webhookEvent.postback) {
-        await handlePostBack(senderPsid, webhookEvent.postback);
+        //! senderAction(senderPsid, "mark_seen");
+        handlePostBack(senderPsid, webhookEvent.postback);
       }
     });
-    senderAction(senderPsid, "mark_seen");
     res.status(200).send("EVENT_RECEIVED");
   } else {
     res.sendStatus(404);
@@ -44,7 +44,7 @@ exports.postWebhook = (req, res) => {
 };
 
 // Handle messages events
-const handleMessage = async (senderPsid, receivedMessage) => {
+const handleMessage = (senderPsid, receivedMessage) => {
   //Check if the message contain a text
   switch (receivedMessage.text) {
     case "مرحبا":
@@ -65,19 +65,19 @@ const handleMessage = async (senderPsid, receivedMessage) => {
           payload: "joinMosque",
         },
       ];
-      await callSendAPI(senderPsid, textTemplate(text.marhaba));
-      await callSendAPI(senderPsid, greeting(text.menu));
-      await callSendAPI(
+      callSendAPI(senderPsid, textTemplate(text.marhaba));
+      callSendAPI(senderPsid, textTemplate(text.menu));
+      callSendAPI(
         senderPsid,
         genericTemplate(buttons, text.menuTitle, text.menuSubtitle)
       );
       break;
     case "مساعدة":
-      await callSendAPI(senderPsid, textTemplate(text.help));
-      await callSendAPI(senderPsid, greeting(text.how));
+      callSendAPI(senderPsid, textTemplate(text.help));
+      callSendAPI(senderPsid, textTemplate(text.how));
       break;
     default:
-      await callSendAPI(senderPsid, textTemplate(text.default));
+      callSendAPI(senderPsid, textTemplate(text.default));
   }
 };
 // handle post-back events
@@ -95,20 +95,4 @@ const handlePostBack = async (senderPsid, receivedPostBack) => {
   }
   // Send the message to acknowledge the post-back
   await callSendAPI(senderPsid, response);
-};
-
-const greeting = () => {
-  buttons = [
-    {
-      type: "web_url",
-      title: "visit a web site",
-      url: "https://takharoubt-app-aa6ev.ondigitalocean.app/",
-    },
-    {
-      type: "postback",
-      title: "quite a web site",
-      payload: "exit",
-    },
-  ];
-  return buttonTemplate(buttons, "Please select a value");
 };

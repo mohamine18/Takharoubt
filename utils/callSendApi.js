@@ -9,29 +9,34 @@ const callSendAPI = (senderPsid, response) => {
     message: response,
   };
   //send a typing indicator
-  senderAction(senderPsid, "typing_on");
+
+  //! senderAction(senderPsid, "typing_on");
+
   // Send the HTTP request to the Messenger Platform
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      request(
-        {
-          uri: "https://graph.facebook.com/v15.0/me/messages",
-          qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
-          method: "POST",
-          json: requestBody,
-        },
-        (err, _res, _body) => {
-          if (!err) {
-            console.log("Message sent!");
-            senderAction(senderPsid, "typing_off");
-            resolve("Message sent!");
-          } else {
-            console.error("Unable to send message:" + err);
-          }
-        }
-      );
-    }, 2000);
-  });
+
+  // return new Promise((resolve) => {
+  //   setTimeout(() => {
+
+  //   }, 2000);
+  // });
+  // console.log(requestBody);
+  request(
+    {
+      uri: process.env.FACEBOOK_URI,
+      qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
+      method: "POST",
+      json: requestBody,
+    },
+    (err, _res, _body) => {
+      if (!err) {
+        console.log("Message sent!");
+        // senderAction(senderPsid, "typing_off");
+        // resolve("Message sent!");
+      } else {
+        console.error("Unable to send message:" + err);
+      }
+    }
+  );
 };
 
 const senderAction = (senderPsid, indicator) => {
@@ -44,7 +49,7 @@ const senderAction = (senderPsid, indicator) => {
   };
   request(
     {
-      uri: "https://graph.facebook.com/v15.0/me/messages",
+      uri: process.env.FACEBOOK_URI,
       qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
       method: "POST",
       json: requestBody,
