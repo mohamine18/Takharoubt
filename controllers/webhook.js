@@ -52,7 +52,7 @@ const handleMessage = async (senderPsid, receivedMessage) => {
         {
           type: "web_url",
           title: text.createRoom,
-          url: "https://takharoubt-app-aa6ev.ondigitalocean.app/",
+          url: "https://takharoubt-app-aa6ev.ondigitalocean.app/create-a-room",
         },
         {
           type: "postback",
