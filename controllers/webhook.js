@@ -89,10 +89,10 @@ const handlePostBack = async (senderPsid, receivedPostBack) => {
 
   // Set the response based on the post-back payload
   switch (payload) {
-    case joinRoom:
+    case "joinRoom":
       response = { text: "Thanks!" };
       break;
-    case joinMosque:
+    case "joinMosque":
       response = { text: "Oops, try sending another image." };
       break;
     default:
