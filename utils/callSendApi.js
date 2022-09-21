@@ -22,8 +22,6 @@ const callSendAPI = (senderPsid, response) => {
       (err, _res, _body) => {
         if (!err) {
           console.log("Message sent!");
-          senderAction(senderPsid, "typing_off");
-          resolve("Message sent!");
         } else {
           console.error("Unable to send message:" + err);
         }
