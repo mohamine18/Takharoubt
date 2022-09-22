@@ -1,6 +1,6 @@
 const psidElement = document.getElementById("psid");
 const threadTypeElement = document.getElementById("threadType");
-cont errorElement = document.getElementById('errorText')
+const errorElement = document.getElementById("errorText");
 window.extAsyncInit = function () {
   MessengerExtensions.getContext(
     "1309656636532884",
@@ -11,7 +11,7 @@ window.extAsyncInit = function () {
     },
     function error(err) {
       // error
-      errorElement.value = err
+      errorElement.value = err;
     }
   );
   console.log(text);
