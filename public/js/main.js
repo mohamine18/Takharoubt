@@ -1,7 +1,7 @@
 window.extAsyncInit = function () {
   let text = "";
   MessengerExtensions.getContext(
-    1309656636532884,
+    "1309656636532884",
     function success(thread_context) {
       const psid = thread_context.thread_type;
       const threadType = thread_context.psid;
