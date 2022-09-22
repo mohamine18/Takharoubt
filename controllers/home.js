@@ -5,3 +5,8 @@ exports.home = (req, res) => {
 exports.createRoom = (req, res) => {
   res.render("createRoom");
 };
+
+exports.getFormData = (req, res) => {
+  console.log(req.body);
+  res.status(200).send("ok");
+};
