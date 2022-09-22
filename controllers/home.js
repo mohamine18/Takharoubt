@@ -8,5 +8,5 @@ exports.createRoom = (req, res) => {
 
 exports.getFormData = (req, res) => {
   console.log(req.body);
-  res.status(200).send("ok");
+  res.redirect("/create-a-room");
 };

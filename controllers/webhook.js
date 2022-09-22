@@ -88,7 +88,7 @@ const greetings = async (senderPsid) => {
     {
       type: "web_url",
       title: text.createRoom,
-      url: `${process.env.WEBSITE_URL}/create-a-room`,
+      url: `${process.env.WEBSITE_URL}/create-a-room?psid=${senderPsid}`,
       webview_height_ratio: "full",
       webview_share_button: "hide",
       messenger_extensions: true,
