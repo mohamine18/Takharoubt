@@ -92,6 +92,7 @@ const greetings = async (senderPsid) => {
       webview_height_ratio: "full",
       webview_share_button: "hide",
       messenger_extensions: true,
+      fallback_url: process.env.WEBSITE_URL,
     },
     {
       type: "postback",
