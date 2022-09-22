@@ -48,29 +48,7 @@ const handleMessage = async (senderPsid, receivedMessage) => {
   //Check if the message contain a text
   switch (receivedMessage.text) {
     case "مرحبا":
-      buttons = [
-        {
-          type: "web_url",
-          title: text.createRoom,
-          url: "https://takharoubt-app-aa6ev.ondigitalocean.app/create-a-room",
-        },
-        {
-          type: "postback",
-          title: text.joinRoom,
-          payload: "joinRoom",
-        },
-        {
-          type: "postback",
-          title: text.joinMosque,
-          payload: "joinMosque",
-        },
-      ];
-      await callSendAPI(senderPsid, textTemplate(text.marhaba));
-      await callSendAPI(senderPsid, textTemplate(text.menu));
-      await callSendAPI(
-        senderPsid,
-        genericTemplate(buttons, text.menuTitle, text.menuSubtitle)
-      );
+      greetings(senderPsid);
       break;
     case "مساعدة":
       await callSendAPI(senderPsid, textTemplate(text.help));
@@ -89,6 +67,9 @@ const handlePostBack = async (senderPsid, receivedPostBack) => {
 
   // Set the response based on the post-back payload
   switch (payload) {
+    case "get_started":
+      greetings(senderPsid);
+      break;
     case "joinRoom":
       response = { text: "Thanks!" };
       break;
@@ -100,4 +81,30 @@ const handlePostBack = async (senderPsid, receivedPostBack) => {
   }
   // Send the message to acknowledge the post-back
   await callSendAPI(senderPsid, response);
+};
+
+const greetings = async (senderPsid) => {
+  buttons = [
+    {
+      type: "web_url",
+      title: text.createRoom,
+      url: `${process.env.WEBSITE_URL}/create-a-room`,
+    },
+    {
+      type: "postback",
+      title: text.joinRoom,
+      payload: "joinRoom",
+    },
+    {
+      type: "postback",
+      title: text.joinMosque,
+      payload: "joinMosque",
+    },
+  ];
+  await callSendAPI(senderPsid, textTemplate(text.marhaba));
+  await callSendAPI(senderPsid, textTemplate(text.menu));
+  await callSendAPI(
+    senderPsid,
+    genericTemplate(buttons, text.menuTitle, text.menuSubtitle)
+  );
 };
