@@ -1,12 +1,16 @@
 const psidElement = document.getElementById("psid");
 const threadTypeElement = document.getElementById("threadType");
 const errorElement = document.getElementById("errorText");
+const isSupportedElement = document.getElementById("isSupported");
+
 window.extAsyncInit = function () {
+  const isSupported = MessengerExtensions.isInExtension();
+  isSupportedElement.value = isSupported;
   MessengerExtensions.getContext(
     "1309656636532884",
-    function success(thread_context) {
+    function success(result) {
       threadTypeElement.value = "entred";
-      psidElement.value = thread_context;
+      psidElement.value = result.psid;
       //   threadTypeElement.value = thread_context.thread_type;
     },
     function error(err) {
@@ -14,5 +18,15 @@ window.extAsyncInit = function () {
       errorElement.value = err;
     }
   );
-  console.log(text);
+  const close = () => {
+    MessengerExtensions.requestCloseBrowser(
+      function success() {
+        // webview closed
+      },
+      function error(err) {
+        // an error occurred
+        console.log(err);
+      }
+    );
+  };
 };
