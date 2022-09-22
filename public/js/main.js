@@ -1,5 +1,5 @@
 window.extAsyncInit = function () {
-  let text = "";
+  let text = "aloo";
   MessengerExtensions.getContext(
     "1309656636532884",
     function success(thread_context) {
