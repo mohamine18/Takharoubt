@@ -1,7 +1,7 @@
 window.extAsyncInit = function () {
   let text = "";
   // the Messenger Extensions JS SDK is done loading
-  text = text + `/ location of iframe: ${window.name}`;
+  //   text = text + `/ location of iframe: ${window.name}`;
   MessengerExtensions.getSupportedFeatures(
     function success(result) {
       let features = result.supported_features;
@@ -10,6 +10,7 @@ window.extAsyncInit = function () {
     function error(err) {
       // error retrieving supported features
       console.log("error:", err);
+      text = text + `/ getSupportedFeatures err: ${err}`;
     }
   );
   MessengerExtensions.getContext(
@@ -19,7 +20,9 @@ window.extAsyncInit = function () {
     },
     function error(err) {
       // error
+      text = text + `/ thread_context err: ${err}`;
     }
   );
-  const err = (document.getElementById("error").textContent = text);
+  console.log(text);
+  document.getElementById("error").textContent = text;
 };
