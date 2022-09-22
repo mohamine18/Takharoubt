@@ -24,5 +24,5 @@ exports.closingPage = async (req, res) => {
   if (req.body.psid !== 0) {
     await callSendAPI(req.body.psid, textTemplate(text.close));
   }
-  return;
+  res.status(200).json({ message: "success" });
 };

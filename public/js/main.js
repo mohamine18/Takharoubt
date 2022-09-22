@@ -17,19 +17,23 @@ window.extAsyncInit = function () {
 };
 
 closeBtn.addEventListener("click", () => {
-  MessengerExtensions.requestCloseBrowser(
-    function success() {
-      fetch(`${globalUrl}/close-page`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(psidData),
-      });
+  fetch(`${globalUrl}/close-page`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-    function error(err) {
-      // an error occurred
-      console.log(err);
+    body: JSON.stringify(psidData),
+  }).then((response) => {
+    if (response.ok) {
+      MessengerExtensions.requestCloseBrowser(
+        function success() {
+          // success code
+        },
+        function error(err) {
+          // an error occurred
+          console.log(err);
+        }
+      );
     }
-  );
+  });
 });
