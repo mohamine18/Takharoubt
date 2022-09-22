@@ -9,7 +9,7 @@ window.extAsyncInit = function () {
     },
     function error(err) {
       // error
-      erre.textContent = +`/ thread_context err: ${err}`;
+      erre.textContent = `/ thread_context err: ${err}`;
     }
   );
   console.log(text);
