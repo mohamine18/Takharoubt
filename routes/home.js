@@ -11,4 +11,6 @@ router
   .get(homeController.createRoom)
   .post(homeController.getFormData);
 
+router.route("/close-page").post(homeController.closingPage);
+
 module.exports = router;

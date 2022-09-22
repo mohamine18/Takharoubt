@@ -1,6 +1,13 @@
 const psidElement = document.getElementById("psid");
 const closeBtn = document.getElementById("closeBtn");
 
+const globalUrl = window.location.protocol + "//" + window.location.host;
+
+const urlObject = new URL(window.location.href);
+const psid = urlObject.searchParams.get("psid");
+const psidData = { psid: psid || 0 };
+psidElement.value = psid;
+
 window.extAsyncInit = function () {
   //   const isSupported = MessengerExtensions.isInExtension();
   //   if (!isSupported) {
@@ -9,15 +16,16 @@ window.extAsyncInit = function () {
   //   }
 };
 
-const url = window.location.href;
-const urlObject = new URL(url);
-const psid = urlObject.searchParams.get("psid");
-psidElement.value = psid;
-
 closeBtn.addEventListener("click", () => {
   MessengerExtensions.requestCloseBrowser(
     function success() {
-      // webview closed
+      fetch(`${globalUrl}/close-page`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(psidData),
+      });
     },
     function error(err) {
       // an error occurred
