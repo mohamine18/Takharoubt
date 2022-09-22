@@ -1,22 +1,11 @@
 window.extAsyncInit = function () {
   let text = "";
-  // the Messenger Extensions JS SDK is done loading
-  //   text = text + `/ location of iframe: ${window.name}`;
-  MessengerExtensions.getSupportedFeatures(
-    function success(result) {
-      let features = result.supported_features;
-      text = text + `/ features: ${features}`;
-    },
-    function error(err) {
-      // error retrieving supported features
-      console.log("error:", err);
-      text = text + `/ getSupportedFeatures err: ${err}`;
-    }
-  );
   MessengerExtensions.getContext(
     1309656636532884,
     function success(thread_context) {
-      text = text + `/ thread_context: ${thread_context}`;
+      const psid = thread_context.thread_type;
+      const threadType = thread_context.psid;
+      text = text + `/ thread_context: ${psid} / ${threadType}`;
     },
     function error(err) {
       // error

@@ -89,7 +89,7 @@ const greetings = async (senderPsid) => {
       type: "web_url",
       title: text.createRoom,
       url: `${process.env.WEBSITE_URL}/create-a-room`,
-      webview_height_ratio: "tall",
+      webview_height_ratio: "full",
       webview_share_button: "hide",
       messenger_extensions: true,
     },
