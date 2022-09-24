@@ -5,7 +5,7 @@ const errorElement = document.getElementById("error");
 const infoElement = document.getElementById("info");
 const methodElement = document.getElementById("method");
 const periodElement = document.getElementById("period");
-const commentElement = document.getElementById("comment");
+const commentElement = document.getElementById("commentField");
 const formElement = document.getElementById("formData");
 
 const methods = ["manzil", "juz", "hizb"];
@@ -52,22 +52,21 @@ formElement.addEventListener("submit", (e) => {
     errorElement.style.display = "block";
     errorElement.textContent = "من فضلك قم بإختيار مدة الختمة";
   } else {
-    MessengerExtensions.requestCloseBrowser(
-      function success() {
-        const formData = {
-          psid: psidElement.value,
-          method: methodElement.value,
-          period: periodElement.value,
-          comment: commentElement.value,
-        };
-        fetch(`${globalUrl}/create-a-room`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }).then((response) => console.log(`message sent: ${response}`));
+    const formData = {
+      psid: psidElement.value,
+      method: methodElement.value,
+      period: periodElement.value,
+      comment: commentElement.value,
+    };
+    fetch(`${globalUrl}/create-a-room`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify(formData),
+    }).then((response) => console.log(`message sent: ${response}`));
+    MessengerExtensions.requestCloseBrowser(
+      function success() {},
       function error(err) {
         // an error occurred
         // ! delete this after testing
