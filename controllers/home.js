@@ -26,3 +26,7 @@ exports.closingPage = async (req, res) => {
   }
   res.status(200).json({ message: "success" });
 };
+
+exports.redirectPage = (req, res) => {
+  res.render("redirectPage");
+};

@@ -13,4 +13,6 @@ router
 
 router.route("/close-page").post(homeController.closingPage);
 
+router.route("/redirect").get(homeController.redirectPage);
+
 module.exports = router;
