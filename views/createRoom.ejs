@@ -35,7 +35,7 @@
       })(document, "script", "Messenger");
     </script>
     <h2>إنشاء ختمة جماعية</h2>
-    <form action="/create-a-room" method="POST">
+    <form action="/create-a-room" method="POST" id="formData">
       <fieldset>
         <label for="ageRangeField">:طريقة تقسيم القرآن</label>
         <select id="method" name="method">
@@ -44,12 +44,13 @@
           <option value="juz">اجزاء</option>
           <option value="hizb">احزاب</option>
         </select>
-        <label for="nameField">:تاريخ انتهاء الختمة</label>
+        <p class="info" id="info"></p>
+        <label for="nameField">:مدة الختمة</label>
         <select id="period" name="period">
           <option disabled selected hidden>مدة الختمة الجماعية</option>
           <option value="day">يوم</option>
-          <option value="week">ثلاث أيام</option>
-          <option value="month">أسبوع</option>
+          <option value="week">أسبوع</option>
+          <option value="month">شهر</option>
         </select>
         <label for="commentField">:الشروط</label>
         <textarea
@@ -57,11 +58,9 @@
           id="commentField"
           name="comment"
         ></textarea>
-        <div>
-          <p class="error" id="error"></p>
-        </div>
+        <p class="error" id="error"></p>
         <div class="formFooter row">
-          <button class="button" type="submit">إنشاء</button>
+          <button class="button" type="submit" id="create">إنشاء</button>
           <a class="button button-outline" id="closeBtn">إلغاء</a>
         </div>
         <input type="text" hidden name="psid" id="psid" />
