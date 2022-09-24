@@ -5,6 +5,7 @@ const errorElement = document.getElementById("error");
 const infoElement = document.getElementById("info");
 const methodElement = document.getElementById("method");
 const periodElement = document.getElementById("period");
+const commentElement = document.getElementById("comment");
 const formElement = document.getElementById("formData");
 
 const methods = ["manzil", "juz", "hizb"];
@@ -53,7 +54,19 @@ formElement.addEventListener("submit", (e) => {
   } else {
     MessengerExtensions.requestCloseBrowser(
       function success() {
-        e.currentTarget.submit();
+        const formData = {
+          psid: psidElement.value,
+          method: methodElement.value,
+          period: periodElement.value,
+          comment: commentElement.value,
+        };
+        fetch(`${globalUrl}/create-a-room`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }).then((response) => console.log(`message sent: ${response}`));
       },
       function error(err) {
         // an error occurred

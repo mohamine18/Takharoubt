@@ -29,7 +29,7 @@ exports.getFormData = async (req, res) => {
   await callSendAPI(req.body.psid, textTemplate(text.Received));
   await callSendAPI(req.body.psid, textTemplate(div.code));
   await callSendAPI(req.body.psid, textTemplate(text.shareCode));
-  res.redirect("/create-a-room");
+  res.status(200).json({ message: "success" });
 };
 
 exports.closingPage = async (req, res) => {
