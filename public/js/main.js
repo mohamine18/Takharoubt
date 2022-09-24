@@ -1,5 +1,7 @@
 const psidElement = document.getElementById("psid");
 const closeBtn = document.getElementById("closeBtn");
+const errorElement = document.getElementById("error");
+const methodElement = document.getElementById("method");
 
 const globalUrl = window.location.protocol + "//" + window.location.host;
 
@@ -10,13 +12,9 @@ psidElement.value = psid;
 
 window.extAsyncInit = function () {
   const isSupported = MessengerExtensions.isInExtension();
-  if (!isSupported) {
-    //! page to tell user that this function is not supported outside the messenger
-    window.location.replace(
-      `${window.location.protocol}//${window.location.host}/redirect`
-    );
-    console.log(`${window.location.host}/redirect`);
-  }
+  // if (!isSupported) {
+  //   window.location.replace(`${globalUrl}/redirect`);
+  // }
 };
 
 closeBtn.addEventListener("click", () => {
@@ -35,4 +33,22 @@ closeBtn.addEventListener("click", () => {
       console.log(`error closing the webview ${err}`);
     }
   );
+});
+
+methodElement.addEventListener("change", (e) => {
+  e.preventDefault();
+  switch (e.target.value) {
+    case "manzil":
+      errorElement.textContent = "ختمة لسبعة اشخاص على الأكثر";
+      break;
+    case "juz":
+      errorElement.textContent = "ختمة لثلاثين شخص على الأكثر";
+      break;
+    case "hizb":
+      errorElement.textContent = "ختمة لستين شخص على الأكثر";
+      break;
+    default:
+      errorElement.textContent = "";
+      break;
+  }
 });

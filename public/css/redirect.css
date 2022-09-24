@@ -16,7 +16,7 @@ body {
   color: #009000;
 }
 
-@media only screen and (min-width: 400px) {
+@media only screen and (min-width: 450px) {
   body {
     background-image: none;
   }

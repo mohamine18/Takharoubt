@@ -33,7 +33,7 @@ exports.postWebhook = (req, res) => {
         senderAction(senderPsid, "mark_seen");
         handleMessage(senderPsid, webhookEvent.message);
       } else if (webhookEvent.postback) {
-        //! senderAction(senderPsid, "mark_seen");
+        senderAction(senderPsid, "mark_seen");
         handlePostBack(senderPsid, webhookEvent.postback);
       }
     });

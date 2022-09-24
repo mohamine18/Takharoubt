@@ -1,0 +1,93 @@
+[
+  {
+    "index": "01",
+    "start": {
+      "index": "001",
+      "title": "Al-Fatiha",
+      "titleAr": "الفاتحة"
+    },
+    "end": {
+      "index": "004",
+      "title": "An-Nisaa'",
+      "titleAr": "النساء"
+    }
+  },
+  {
+    "index": "02",
+    "start": {
+      "index": "005",
+      "title": "Al-Ma'ida",
+      "titleAr": "المائدة"
+    },
+    "end": {
+      "index": "009",
+      "title": "Al-Tawba",
+      "titleAr": "التوبة"
+    }
+  },
+  {
+    "index": "03",
+    "start": {
+      "index": "010",
+      "title": "Yunus",
+      "titleAr": "يونس"
+    },
+    "end": {
+      "index": "016",
+      "title": "An-Nahl",
+      "titleAr": "النحل"
+    }
+  },
+  {
+    "index": "04",
+    "start": {
+      "index": "017",
+      "title": "Al-Israa",
+      "titleAr": "الإسراء"
+    },
+    "end": {
+      "index": "025",
+      "title": "Al-Furqan",
+      "titleAr": "الفرقان"
+    }
+  },
+  {
+    "index": "05",
+    "start": {
+      "index": "026",
+      "title": "Ash-Shuara",
+      "titleAr": "الشعراء"
+    },
+    "end": {
+      "index": "036",
+      "title": "Yasin",
+      "titleAr": "يس"
+    }
+  },
+  {
+    "index": "06",
+    "start": {
+      "index": "037",
+      "title": "As-Saffat",
+      "titleAr": "الصافات"
+    },
+    "end": {
+      "index": "049",
+      "title": "Al-Hujurat",
+      "titleAr": "الحجرات"
+    }
+  },
+  {
+    "index": "07",
+    "start": {
+      "index": "050",
+      "title": "Qaf",
+      "titleAr": "ق"
+    },
+    "end": {
+      "index": "114",
+      "title": "An-Nas",
+      "titleAr": "الناس"
+    }
+  }
+]
