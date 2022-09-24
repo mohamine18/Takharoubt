@@ -83,13 +83,13 @@ methodElement.addEventListener("change", (e) => {
   infoElement.style.display = "block";
   switch (e.target.value) {
     case "manzil":
-      infoElement.textContent = "ختمة لسبعة 7 اشخاص على الأكثر";
+      infoElement.textContent = "ختمة لسبعة (7) اشخاص على الأكثر";
       break;
     case "juz":
-      infoElement.textContent = "ختمة لثلاثين 30 شخص على الأكثر";
+      infoElement.textContent = "ختمة لثلاثين (30) شخص على الأكثر";
       break;
     case "hizb":
-      infoElement.textContent = "ختمة لستين 60 شخص على الأكثر";
+      infoElement.textContent = "ختمة لستين (60) شخص على الأكثر";
       break;
     default:
       infoElement.textContent = "";
