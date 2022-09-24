@@ -17,15 +17,18 @@ exports.createRoom = (req, res) => {
 };
 
 exports.getFormData = async (req, res) => {
+  console.log("body psid:" + req.body.psid);
   const newDivision = new Division({
     psid: req.body.psid,
     method: req.body.method,
     period: req.body.period,
+    comment: req.body.comment,
   });
   const div = await newDivision.save();
-  await callSendAPI(div.psid, textTemplate(text.Received));
-  await callSendAPI(div.psid, textTemplate(div.code));
-  await callSendAPI(div.psid, textTemplate(text.shareCode));
+  console.log(div);
+  await callSendAPI(req.body.psid, textTemplate(text.Received));
+  await callSendAPI(req.body.psid, textTemplate(div.code));
+  await callSendAPI(req.body.psid, textTemplate(text.shareCode));
   res.redirect("/create-a-room");
 };
 

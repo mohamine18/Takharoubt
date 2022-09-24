@@ -21,6 +21,7 @@ const divisionSchema = new Schema(
       },
     ],
     selectedIndexes: [String],
+    comment: String,
     active: {
       type: Boolean,
       default: true,
@@ -32,10 +33,10 @@ const divisionSchema = new Schema(
 divisionSchema.pre("save", function (next) {
   if (!this.code) {
     let code;
-    let lastFiveChar = this._id
+    const lastFiveChar = this._id
       .toString()
       .substring(this._id.toString().length - 5);
-    let milliseconds = new Date().getMilliseconds();
+    const milliseconds = new Date().getMilliseconds();
     code = `takharoubt-${lastFiveChar}-${milliseconds}`;
     this.code = code;
   }
