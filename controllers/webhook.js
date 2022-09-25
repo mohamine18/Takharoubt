@@ -46,7 +46,8 @@ exports.postWebhook = (req, res) => {
 // Handle messages events
 const handleMessage = async (senderPsid, receivedMessage) => {
   //Check if the message contain a text
-  switch (receivedMessage.text) {
+  const receivedWord = receivedMessage.text;
+  switch (receivedWord) {
     case "مرحبا":
       greetings(senderPsid);
       break;
@@ -54,19 +55,12 @@ const handleMessage = async (senderPsid, receivedMessage) => {
       await callSendAPI(senderPsid, textTemplate(text.help));
       await callSendAPI(senderPsid, textTemplate(text.how));
       break;
-    case /^(takharoubt)-(hizb|juz|manzil)-[a-zA-Z0-9]*/.test(
-      receivedMessage.text
-    ):
+    case receivedWord.match(/^(takharoubt)-(hizb|juz|manzil)-[a-zA-Z0-9]*/)
+      ?.input:
       console.log();
       console.log("verified");
       break;
     default:
-      console.log(receivedMessage.text);
-      console.log(
-        /^(takharoubt)-(hizb|juz|manzil)-[a-zA-Z0-9]*/.test(
-          receivedMessage.text
-        )
-      );
       await callSendAPI(senderPsid, textTemplate(text.default));
   }
 };
