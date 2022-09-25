@@ -92,3 +92,9 @@ select:focus {
   opacity: 0.5;
   margin-bottom: 0;
 }
+
+@media only screen and (min-width: 450px) {
+  body {
+    background-image: none;
+  }
+}

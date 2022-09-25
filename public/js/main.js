@@ -58,13 +58,14 @@ formElement.addEventListener("submit", (e) => {
       period: periodElement.value,
       comment: commentElement.value,
     };
+    // ! move this inside success function in production
     fetch(`${globalUrl}/create-a-room`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
-    }).then((response) => console.log(`message sent: ${response}`));
+    }).then((response) => console.log(`message sent: ${response.json()}`));
     MessengerExtensions.requestCloseBrowser(
       function success() {},
       function error(err) {

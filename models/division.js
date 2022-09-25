@@ -32,13 +32,10 @@ const divisionSchema = new Schema(
 
 divisionSchema.pre("save", function (next) {
   if (!this.code) {
-    let code;
     const lastFiveChar = this._id
       .toString()
       .substring(this._id.toString().length - 5);
-    const milliseconds = new Date().getMilliseconds();
-    code = `takharoubt-${lastFiveChar}-${milliseconds}`;
-    this.code = code;
+    this.code = `takharoubt-${this.method}-${lastFiveChar}`;
   }
   next();
 });

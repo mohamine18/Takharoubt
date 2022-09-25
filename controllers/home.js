@@ -7,6 +7,7 @@ const {
 } = require("../utils/template");
 
 const Division = require("../models/division");
+const division = require("../models/division");
 
 exports.home = (req, res) => {
   res.render("home");
@@ -17,18 +18,28 @@ exports.createRoom = (req, res) => {
 };
 
 exports.getFormData = async (req, res) => {
-  console.log("body psid:" + req.body.psid);
-  const newDivision = new Division({
-    psid: req.body.psid,
-    method: req.body.method,
-    period: req.body.period,
-    comment: req.body.comment,
-  });
-  const div = await newDivision.save();
-  console.log(div);
-  await callSendAPI(req.body.psid, textTemplate(text.Received));
-  await callSendAPI(req.body.psid, textTemplate(div.code));
-  await callSendAPI(req.body.psid, textTemplate(text.shareCode));
+  const psid = "5477668622316338";
+  // const psid = req.body.psid;
+  const divisionCount = await Division.find({ psid: psid, active: true });
+  if (divisionCount.length === 5) {
+    await callSendAPI(psid, textTemplate(text.limit));
+    await callSendAPI(
+      psid,
+      textTemplate(text.limitExplanation + divisionCount.length)
+    );
+  } else {
+    const newDivision = new Division({
+      psid,
+      method: req.body.method,
+      period: req.body.period,
+      comment: req.body.comment,
+    });
+    const div = await newDivision.save();
+    await callSendAPI(psid, textTemplate(text.Received));
+    await callSendAPI(psid, textTemplate(div.code));
+    await callSendAPI(psid, textTemplate(text.shareCode));
+  }
+
   res.status(200).json({ message: "success" });
 };
 

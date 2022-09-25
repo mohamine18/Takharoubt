@@ -54,6 +54,9 @@ const handleMessage = async (senderPsid, receivedMessage) => {
       await callSendAPI(senderPsid, textTemplate(text.help));
       await callSendAPI(senderPsid, textTemplate(text.how));
       break;
+    case /^(takharoubt)-(hizb|juz|manzil)-[a-zA-Z0-9]*/:
+      console.log("verified");
+      break;
     default:
       await callSendAPI(senderPsid, textTemplate(text.default));
   }
@@ -71,16 +74,15 @@ const handlePostBack = async (senderPsid, receivedPostBack) => {
       greetings(senderPsid);
       break;
     case "joinRoom":
-      response = { text: "Thanks!" };
+      await callSendAPI(senderPsid, textTemplate(text.enterRoomCode));
       break;
     case "joinMosque":
-      response = { text: "Oops, try sending another image." };
+      // await callSendAPI(senderPsid, textTemplate(text.));
       break;
     default:
       break;
   }
   // Send the message to acknowledge the post-back
-  await callSendAPI(senderPsid, response);
 };
 
 const greetings = async (senderPsid) => {
