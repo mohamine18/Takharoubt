@@ -1,3 +1,4 @@
+const fetch = require("node-fetch");
 const { text } = require("../utils/text");
 const { callSendAPI, senderAction } = require("../utils/callSendApi");
 const {
@@ -5,6 +6,8 @@ const {
   buttonTemplate,
   textTemplate,
 } = require("../utils/template");
+
+const { hizb, juz, manzil } = require("../data/data");
 
 const Division = require("../models/division");
 
@@ -53,7 +56,50 @@ exports.redirectPage = (req, res) => {
   res.render("redirectPage");
 };
 
-exports.divisionPage = (req, res) => {
-  console.log(req.params.divisionId);
-  res.render("divisionPage");
+exports.divisionPage = async (req, res) => {
+  let data;
+  const divisionId = req.params.divisionId;
+  const division = await Division.findOne({ code: divisionId });
+
+  switch (division.method) {
+    case "manzil":
+      data = divisions(division, manzil);
+      break;
+    case "juz":
+      data = divisions(division, juz);
+      break;
+    case "hizb":
+      data = divisions(division, hizb);
+      break;
+    default:
+      break;
+  }
+  res.render("divisionPage", { data });
+};
+
+const divisions = (division, data) => {
+  const used = division.selectedIndexes;
+  const divisions = data.map((element) => {
+    const startText =
+      element.start.verse === "1" || element.start.verse === undefined
+        ? `من بداية سورة ${element.start.titleAr}`
+        : `من سورة ${element.start.titleAr} آية ${element.start.verse}`;
+    const endText =
+      element.end.verse == element.end.count
+        ? `الى آخر سورة ${element.end.titleAr}`
+        : `الى الآية ${element.end.verse} من سورة ${element.end.titleAr}`;
+    const text = `${startText} ${endText}`;
+    const disabled = used.includes(element.index) ? "disabled" : "";
+    return { index: element.index, text, disabled };
+  });
+  return divisions;
+};
+
+exports.selectedDivision = async (req, res) => {
+  const { psid, index, text } = req.body;
+  if (psid !== 0) {
+    await callSendAPI(psid, textTemplate(text.selected));
+    await callSendAPI(psid, textTemplate(text));
+  }
+  res.status(200).json({ message: "success" });
 };

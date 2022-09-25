@@ -1,0 +1,41 @@
+body {
+  font-family: "Amiri", "sans-serif";
+  background-image: url(https://img.freepik.com/free-vector/mandala-illustration_53876-81805.jpg?w=1380&t=st=1663771384~exp=1663771984~hmac=f285195e9d3ac95b37ee187fd4752e23dc02618090499c307cf0f00807ee2355);
+  background-color: #ffffff;
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+.container {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center;
+    text-align: center; */
+  /* min-height: 100vh; */
+}
+
+h3 {
+  text-align: center;
+  color: #009000;
+}
+.button {
+  background-color: #009000;
+  border: #009000;
+  font-size: 1.5rem;
+  white-space: normal;
+  height: auto;
+}
+
+.button[disabled] {
+  cursor: default;
+  opacity: 0.5;
+  background-color: gray;
+}
+
+@media only screen and (min-width: 450px) {
+  body {
+    background-image: none;
+  }
+}

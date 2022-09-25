@@ -130,7 +130,7 @@ const joinRoom = async (senderPsid, roomCode) => {
     {
       type: "web_url",
       title: text.buttonJoinRoom,
-      url: `${process.env.WEBSITE_URL}/select-division/${roomCode}`,
+      url: `${process.env.WEBSITE_URL}/select-division/${roomCode}?psid=${senderPsid}`,
       webview_height_ratio: "full",
       webview_share_button: "hide",
       messenger_extensions: true,

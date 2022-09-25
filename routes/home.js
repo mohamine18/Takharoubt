@@ -16,5 +16,6 @@ router.route("/close-page").post(homeController.closingPage);
 router.route("/redirect").get(homeController.redirectPage);
 
 router.route("/select-division/:divisionId").get(homeController.divisionPage);
+router.route("/selected-division").post(homeController.selectedDivision);
 
 module.exports = router;
