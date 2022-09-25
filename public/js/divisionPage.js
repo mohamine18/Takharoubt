@@ -17,7 +17,7 @@ document.addEventListener("click", (e) => {
     const data = {
       psid: psid,
       index: e.target.id,
-      text: e.target.textContent,
+      divisionText: e.target.textContent,
     };
     fetch(`${globalUrl}/selected-division`, {
       method: "POST",

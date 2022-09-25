@@ -95,11 +95,11 @@ const divisions = (division, data) => {
 };
 
 exports.selectedDivision = async (req, res) => {
-  const { psid, index, text } = req.body;
+  const { psid, index, divisionText } = req.body;
   console.log(typeof psid);
   if (psid !== 0) {
     await callSendAPI(psid, textTemplate(text.selected));
-    await callSendAPI(psid, textTemplate(text));
+    await callSendAPI(psid, textTemplate(divisionText));
   }
   res.status(200).json({ message: "success" });
 };
