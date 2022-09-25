@@ -1,4 +1,3 @@
-const fetch = require("node-fetch");
 const { text } = require("../utils/text");
 const { callSendAPI, senderAction } = require("../utils/callSendApi");
 const {
