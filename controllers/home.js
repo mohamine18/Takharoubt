@@ -17,8 +17,8 @@ exports.createRoom = (req, res) => {
 };
 
 exports.getFormData = async (req, res) => {
-  const psid = "5477668622316338";
-  // const psid = req.body.psid;
+  // const psid = "5477668622316338";
+  const psid = req.body.psid;
   const divisionCount = await Division.find({ psid: psid, active: true });
   if (divisionCount.length === 5) {
     await callSendAPI(psid, textTemplate(text.limit));
