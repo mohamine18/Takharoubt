@@ -6,6 +6,8 @@ const {
   textTemplate,
 } = require("../utils/template");
 
+const Division = require("../models/division");
+
 exports.getWebhook = (req, res) => {
   const mode = req.query["hub.mode"];
   const token = req.query["hub.verify_token"];
@@ -55,10 +57,17 @@ const handleMessage = async (senderPsid, receivedMessage) => {
       await callSendAPI(senderPsid, textTemplate(text.help));
       await callSendAPI(senderPsid, textTemplate(text.how));
       break;
-    case receivedWord.match(/^(takharoubt)-(hizb|juz|manzil)-[a-zA-Z0-9]*/)
+    case receivedWord.match(/^(takharoubt)-(hizb|juz|manzil)-([a-zA-Z0-9]){5}/)
       ?.input:
-      console.log();
-      console.log("verified");
+      const exists = await Division.findOne({
+        code: receivedWord,
+        active: true,
+      });
+      if (exists) {
+        joinRoom(senderPsid, receivedWord);
+      } else {
+        await callSendAPI(senderPsid, textTemplate(text.roomNotFound));
+      }
       break;
     default:
       await callSendAPI(senderPsid, textTemplate(text.default));
@@ -66,8 +75,6 @@ const handleMessage = async (senderPsid, receivedMessage) => {
 };
 // handle post-back events
 const handlePostBack = async (senderPsid, receivedPostBack) => {
-  let response;
-
   // Get the payload for the post-back
   let payload = receivedPostBack.payload;
 
@@ -116,4 +123,19 @@ const greetings = async (senderPsid) => {
     senderPsid,
     genericTemplate(buttons, text.menuTitle, text.menuSubtitle)
   );
+};
+
+const joinRoom = async (senderPsid, roomCode) => {
+  buttons = [
+    {
+      type: "web_url",
+      title: text.buttonJoinRoom,
+      url: `${process.env.WEBSITE_URL}/select-division/${roomCode}`,
+      webview_height_ratio: "full",
+      webview_share_button: "hide",
+      messenger_extensions: true,
+      fallback_url: `${process.env.WEBSITE_URL}/redirect`,
+    },
+  ];
+  await callSendAPI(senderPsid, buttonTemplate(buttons, text.roomLink));
 };

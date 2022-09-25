@@ -7,7 +7,6 @@ const {
 } = require("../utils/template");
 
 const Division = require("../models/division");
-const division = require("../models/division");
 
 exports.home = (req, res) => {
   res.render("home");
@@ -52,4 +51,9 @@ exports.closingPage = async (req, res) => {
 
 exports.redirectPage = (req, res) => {
   res.render("redirectPage");
+};
+
+exports.divisionPage = (req, res) => {
+  console.log(req.params.divisionId);
+  res.render("divisionPage");
 };
