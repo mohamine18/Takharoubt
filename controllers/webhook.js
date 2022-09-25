@@ -57,9 +57,16 @@ const handleMessage = async (senderPsid, receivedMessage) => {
     case /^(takharoubt)-(hizb|juz|manzil)-[a-zA-Z0-9]*/.test(
       receivedMessage.text
     ):
+      console.log();
       console.log("verified");
       break;
     default:
+      console.log(receivedMessage.text);
+      console.log(
+        /^(takharoubt)-(hizb|juz|manzil)-[a-zA-Z0-9]*/.test(
+          receivedMessage.text
+        )
+      );
       await callSendAPI(senderPsid, textTemplate(text.default));
   }
 };
