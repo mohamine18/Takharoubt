@@ -24,6 +24,7 @@ exports.getWebhook = (req, res) => {
 
 exports.postWebhook = (req, res) => {
   const body = req.body;
+  console.log(body);
   if (body.object === "page") {
     body.entry.forEach((entry) => {
       // GET the body of the Webhook Event
