@@ -75,7 +75,7 @@ exports.divisionPage = async (req, res) => {
     default:
       break;
   }
-  res.render("divisionPage", { data });
+  res.render("divisionPage", { data, active: division.active });
 };
 
 const divisions = (division, data) => {
@@ -106,8 +106,10 @@ exports.selectedDivision = async (req, res) => {
     };
     const divisionUpdated = await Division.findOneAndUpdate(
       { code: roomCode },
-      { $push: { readers: reader } }
+      { $push: { readers: reader } },
+      { new: true }
     );
+    divisionUpdated.checkActive();
     await callSendAPI(psid, textTemplate(text.selected));
     await callSendAPI(psid, textTemplate(divisionText));
     if (divisionUpdated.comment !== "") {

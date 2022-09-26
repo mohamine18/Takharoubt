@@ -16,6 +16,13 @@ body {
   /* min-height: 100vh; */
 }
 
+.close {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80vh;
+}
+
 h3 {
   text-align: center;
   color: #009000;

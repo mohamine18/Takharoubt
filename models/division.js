@@ -40,4 +40,26 @@ divisionSchema.pre("save", function (next) {
   next();
 });
 
+divisionSchema.methods.checkActive = function () {
+  let divisions;
+  const selected = new Set(this.selectedIndexes);
+  switch (this.method) {
+    case "juz":
+      divisions = 30;
+      break;
+    case "manzil":
+      divisions = 7;
+      break;
+    case "hizb":
+      divisions = 60;
+      break;
+    default:
+      break;
+  }
+  if (selected.size === divisions) {
+    this.active = false;
+  }
+  this.save();
+};
+
 module.exports = mongoose.model("Division", divisionSchema);

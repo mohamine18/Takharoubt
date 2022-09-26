@@ -35,13 +35,18 @@
         fjs.parentNode.insertBefore(js, fjs);
       })(document, "script", "Messenger");
     </script>
+    <% if (active) { %>
     <h3>قم بإختيار الورد القرآني</h3>
 
     <% data.forEach(element => { %>
     <button class="button" id="<%= element.index %>" <%-element.disabled %>
       ><%= element.text%>
     </button>
-    <% }) %>
+    <% }) %> <% } else { %>
+    <div class="close">
+      <h3>لقد تم غلق هاته الختمة القرآنية بعد استيفاء شروطها</h3>
+    </div>
+    <% } %>
 
     <script src="/js/divisionPage.js"></script>
   </body>
