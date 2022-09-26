@@ -86,9 +86,9 @@ const handlePostBack = async (senderPsid, receivedPostBack) => {
     case "joinRoom":
       await callSendAPI(senderPsid, textTemplate(text.enterRoomCode));
       break;
-    case "joinMosque":
-      // await callSendAPI(senderPsid, textTemplate(text.));
-      break;
+    // case "joinMosque":
+    //   // await callSendAPI(senderPsid, textTemplate(text.));
+    //   break;
     default:
       break;
   }
@@ -111,11 +111,11 @@ const greetings = async (senderPsid) => {
       title: text.joinRoom,
       payload: "joinRoom",
     },
-    {
-      type: "postback",
-      title: text.joinMosque,
-      payload: "joinMosque",
-    },
+    // {
+    //   type: "postback",
+    //   title: text.joinMosque,
+    //   payload: "joinMosque",
+    // },
   ];
   await callSendAPI(senderPsid, textTemplate(text.marhaba));
   await callSendAPI(senderPsid, textTemplate(text.menu));
@@ -130,7 +130,7 @@ const joinRoom = async (senderPsid, roomCode) => {
     {
       type: "web_url",
       title: text.buttonJoinRoom,
-      url: `${process.env.WEBSITE_URL}/select-division/${roomCode}?psid=${senderPsid}`,
+      url: `${process.env.WEBSITE_URL}/select-division/${roomCode}?psid=${senderPsid}&roomCode=${roomCode}`,
       webview_height_ratio: "full",
       webview_share_button: "hide",
       messenger_extensions: true,

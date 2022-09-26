@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 const { text } = require("../utils/text");
 const { callSendAPI, senderAction } = require("../utils/callSendApi");
 const {
@@ -95,11 +97,48 @@ const divisions = (division, data) => {
 };
 
 exports.selectedDivision = async (req, res) => {
-  const { psid, index, divisionText } = req.body;
-  console.log(typeof psid);
+  const { psid, index, divisionText, roomCode } = req.body;
+
   if (psid !== 0) {
+    const reader = {
+      readersPsid: psid,
+      index: index,
+    };
+    const divisionUpdated = await Division.findOneAndUpdate(
+      { code: roomCode },
+      { $push: { readers: reader } }
+    );
     await callSendAPI(psid, textTemplate(text.selected));
     await callSendAPI(psid, textTemplate(divisionText));
+    if (divisionUpdated.comment !== "") {
+      await callSendAPI(psid, textTemplate(text.conditions));
+      await callSendAPI(psid, textTemplate(divisionUpdated.comment));
+    }
+    await callSendAPI(psid, textTemplate(text.timer));
+    moment.locale("ar");
+    switch (divisionUpdated.period) {
+      case "day":
+        const dateDay = moment(divisionUpdated.createdAt)
+          .add("1", "days")
+          .format("dddd, D MMMM YYYY");
+        await callSendAPI(psid, textTemplate(dateDay));
+        break;
+      case "week":
+        const dateWeek = moment(divisionUpdated.createdAt)
+          .add("7", "days")
+          .format("dddd, D MMMM YYYY");
+        await callSendAPI(psid, textTemplate(dateWeek));
+        break;
+      case "month":
+        const dateMonth = moment(divisionUpdated.createdAt)
+          .add("1", "months")
+          .format("dddd, D MMMM YYYY");
+        await callSendAPI(psid, textTemplate(dateMonth));
+        break;
+    }
+
+    await callSendAPI(psid, textTemplate(text.reminder));
+    await callSendAPI(psid, textTemplate(text.prayer));
   }
   res.status(200).json({ message: "success" });
 };

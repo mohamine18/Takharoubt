@@ -1,4 +1,8 @@
 const mongoose = require("mongoose");
+const { Server } = require("socket.io");
+
+const selectedDivisionHandler = require("./connection/selectDivision");
+
 require("dotenv").config();
 
 const app = require("./app");
@@ -15,6 +19,12 @@ mongoose.connect(
   }
 );
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+});
+
+const io = new Server(server);
+
+io.on("connection", (socket) => {
+  selectedDivisionHandler(io, socket);
 });
