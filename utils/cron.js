@@ -3,9 +3,10 @@ const moment = require("moment");
 
 const Division = require("../models/division");
 
+// (*/1 * * * *) every min __ every hours (0 */1 * * *)
 const cronJob = () => {
   cron.schedule(
-    "0 */1 * * *", // "*/1 * * * *"
+    "0 */1 * * *",
     async () => {
       const divisions = await Division.find({ active: true }).select(
         "createdAt period"
@@ -25,7 +26,8 @@ const cronJob = () => {
             break;
           case "week":
             const createdWeek = moment(elem.createdAt).add("7", "days");
-            const diffWeek = createdWeek.diff(today, "days");
+            const diffWeek = createdWeek.diff(today, "hours");
+            console.log(diffWeek);
             if (diffWeek <= 0) {
               await Division.findOneAndUpdate(
                 { _id: elem._id },
@@ -35,7 +37,8 @@ const cronJob = () => {
             break;
           case "month":
             const createdMonth = moment(elem.createdAt).add("1", "month");
-            const diffMonth = createdMonth.diff(today, "days");
+            const diffMonth = createdMonth.diff(today, "hours");
+            console.log(diffMonth);
             if (diffMonth <= 0) {
               await Division.findOneAndUpdate(
                 { _id: elem._id },
