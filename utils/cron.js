@@ -27,7 +27,6 @@ const cronJob = () => {
           case "week":
             const createdWeek = moment(elem.createdAt).add("7", "days");
             const diffWeek = createdWeek.diff(today, "hours");
-            console.log(diffWeek);
             if (diffWeek <= 0) {
               await Division.findOneAndUpdate(
                 { _id: elem._id },
@@ -38,7 +37,6 @@ const cronJob = () => {
           case "month":
             const createdMonth = moment(elem.createdAt).add("1", "month");
             const diffMonth = createdMonth.diff(today, "hours");
-            console.log(diffMonth);
             if (diffMonth <= 0) {
               await Division.findOneAndUpdate(
                 { _id: elem._id },
@@ -48,7 +46,6 @@ const cronJob = () => {
             break;
         }
       });
-      console.log("Cron executed");
     },
     { timezone: "Africa/Algiers", scheduled: true }
   );

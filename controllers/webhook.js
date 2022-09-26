@@ -43,6 +43,7 @@ exports.postWebhook = (req, res) => {
     res.status(200).send("EVENT_RECEIVED");
   } else if (body.object === "whatsapp_business_account") {
     console.log(body);
+    res.status(200).send("EVENT_RECEIVED");
   } else {
     res.sendStatus(404);
   }
