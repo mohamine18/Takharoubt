@@ -1,5 +1,7 @@
 const moment = require("moment");
 
+const Email = require("../utils/mail");
+const catchAsync = require("../utils/catchAsync");
 const { text } = require("../utils/text");
 const { callSendAPI, senderAction } = require("../utils/callSendApi");
 const {
@@ -13,14 +15,20 @@ const { hizb, juz, manzil } = require("../data/data");
 const Division = require("../models/division");
 
 exports.home = (req, res) => {
-  res.render("home");
+  res.render("home", { link: process.env.MESSENGER_LINK });
 };
 
 exports.createRoom = (req, res) => {
   res.render("createRoom");
 };
 
-exports.getFormData = async (req, res) => {
+exports.redirectPage = (req, res) => {
+  res.render("redirectPage", {
+    link: process.env.MESSENGER_LINK,
+  });
+};
+
+exports.getFormData = catchAsync(async (req, res) => {
   // const psid = "5477668622316338";
   const psid = req.body.psid;
   const divisionCount = await Division.find({ psid: psid, active: true });
@@ -44,20 +52,16 @@ exports.getFormData = async (req, res) => {
   }
 
   res.status(200).json({ message: "success" });
-};
+});
 
-exports.closingPage = async (req, res) => {
+exports.closingPage = catchAsync(async (req, res) => {
   if (req.body.psid !== 0) {
     await callSendAPI(req.body.psid, textTemplate(text.close));
   }
   res.status(200).json({ message: "success" });
-};
+});
 
-exports.redirectPage = (req, res) => {
-  res.render("redirectPage");
-};
-
-exports.divisionPage = async (req, res) => {
+exports.divisionPage = catchAsync(async (req, res) => {
   let data;
   const divisionId = req.params.divisionId;
   const division = await Division.findOne({ code: divisionId });
@@ -76,7 +80,7 @@ exports.divisionPage = async (req, res) => {
       break;
   }
   res.render("divisionPage", { data, active: division.active });
-};
+});
 
 const divisions = (division, data) => {
   const used = division.selectedIndexes;
@@ -96,7 +100,7 @@ const divisions = (division, data) => {
   return divisions;
 };
 
-exports.selectedDivision = async (req, res) => {
+exports.selectedDivision = catchAsync(async (req, res) => {
   const { psid, index, divisionText, roomCode } = req.body;
 
   if (psid !== 0) {
@@ -143,4 +147,4 @@ exports.selectedDivision = async (req, res) => {
     await callSendAPI(psid, textTemplate(text.prayer));
   }
   res.status(200).json({ message: "success" });
-};
+});

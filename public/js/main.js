@@ -20,9 +20,9 @@ psidElement.value = psid;
 
 window.extAsyncInit = function () {
   const isSupported = MessengerExtensions.isInExtension();
-  // if (!isSupported) {
-  //   window.location.replace(`${globalUrl}/redirect`);
-  // }
+  if (!isSupported) {
+    window.location.replace(`${globalUrl}/redirect`);
+  }
 };
 
 closeBtn.addEventListener("click", () => {
@@ -58,6 +58,7 @@ formElement.addEventListener("submit", (e) => {
       period: periodElement.value,
       comment: commentElement.value,
     };
+
     // ! move this inside success function in production
     fetch(`${globalUrl}/create-a-room`, {
       method: "POST",
@@ -66,6 +67,7 @@ formElement.addEventListener("submit", (e) => {
       },
       body: JSON.stringify(formData),
     }).then((response) => console.log(`message sent: ${response.json()}`));
+
     MessengerExtensions.requestCloseBrowser(
       function success() {},
       function error(err) {

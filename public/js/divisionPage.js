@@ -7,9 +7,9 @@ const socket = io();
 
 window.extAsyncInit = function () {
   const isSupported = MessengerExtensions.isInExtension();
-  // if (!isSupported) {
-  //   window.location.replace(`${globalUrl}/redirect`);
-  // }
+  if (!isSupported) {
+    window.location.replace(`${globalUrl}/redirect`);
+  }
 };
 
 socket.on("selectedDivision", (index) => {
@@ -40,6 +40,7 @@ document.addEventListener("click", (e) => {
       },
       body: JSON.stringify(data),
     }).then((response) => console.log(`message sent: ${response}`));
+
     MessengerExtensions.requestCloseBrowser(
       function success() {},
       function error(err) {

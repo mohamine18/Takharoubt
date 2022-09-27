@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 
 const webhookRouter = require("./routes/webhook");
 const homeRouter = require("./routes/home");
+const { pageNotFound, globalErrorhandler } = require("./controllers/error");
 
 const app = express();
 
@@ -18,6 +19,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", homeRouter);
 app.use("/webhook", webhookRouter);
+
+app.use("*", pageNotFound);
+app.use(globalErrorhandler);
 
 cronJob();
 

@@ -16,6 +16,33 @@ body {
   color: #009000;
 }
 
+.button,
+input[type="submit"] {
+  background-color: #009000;
+  border: 0.1rem solid #009000;
+  border-radius: 0.4rem;
+  font-size: 1.5rem;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 700;
+  height: 3.8rem;
+  letter-spacing: 0.1rem;
+  line-height: 3.8rem;
+  padding: 0 3rem;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.button-small {
+  font-size: 0.8rem;
+  height: 2.8rem;
+  line-height: 2.8rem;
+  padding: 0 1.5rem;
+}
+
 @media only screen and (min-width: 450px) {
   body {
     background-image: none;

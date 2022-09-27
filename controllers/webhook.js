@@ -1,3 +1,4 @@
+const catchAsync = require("../utils/catchAsync");
 const { text } = require("../utils/text");
 const { callSendAPI, senderAction } = require("../utils/callSendApi");
 const {
@@ -41,16 +42,13 @@ exports.postWebhook = (req, res) => {
       }
     });
     res.status(200).send("EVENT_RECEIVED");
-  } else if (body.object === "whatsapp_business_account") {
-    console.log(body);
-    res.status(200).send("EVENT_RECEIVED");
   } else {
     res.sendStatus(404);
   }
 };
 
 // Handle messages events
-const handleMessage = async (senderPsid, receivedMessage) => {
+const handleMessage = catchAsync(async (senderPsid, receivedMessage) => {
   //Check if the message contain a text
   const receivedWord = receivedMessage.text;
   switch (receivedWord) {
@@ -76,9 +74,9 @@ const handleMessage = async (senderPsid, receivedMessage) => {
     default:
       await callSendAPI(senderPsid, textTemplate(text.default));
   }
-};
+});
 // handle post-back events
-const handlePostBack = async (senderPsid, receivedPostBack) => {
+const handlePostBack = catchAsync(async (senderPsid, receivedPostBack) => {
   // Get the payload for the post-back
   let payload = receivedPostBack.payload;
 
@@ -97,9 +95,9 @@ const handlePostBack = async (senderPsid, receivedPostBack) => {
       break;
   }
   // Send the message to acknowledge the post-back
-};
+});
 
-const greetings = async (senderPsid) => {
+const greetings = catchAsync(async (senderPsid) => {
   buttons = [
     {
       type: "web_url",
@@ -127,9 +125,9 @@ const greetings = async (senderPsid) => {
     senderPsid,
     genericTemplate(buttons, text.menuTitle, text.menuSubtitle)
   );
-};
+});
 
-const joinRoom = async (senderPsid, roomCode) => {
+const joinRoom = catchAsync(async (senderPsid, roomCode) => {
   buttons = [
     {
       type: "web_url",
@@ -142,4 +140,4 @@ const joinRoom = async (senderPsid, roomCode) => {
     },
   ];
   await callSendAPI(senderPsid, buttonTemplate(buttons, text.roomLink));
-};
+});

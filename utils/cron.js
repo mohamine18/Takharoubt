@@ -47,7 +47,7 @@ const cronJob = () => {
         }
       });
     },
-    { timezone: "Africa/Algiers", scheduled: true }
+    { scheduled: true }
   );
 };
 
