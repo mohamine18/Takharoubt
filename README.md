@@ -10,7 +10,7 @@ The project is mainly divided to two main entities which are backend written use
 
 ## How to use the app:
 
-First you need to like and send a message to this [Facebook Page](www.facebook.com/sharingamazing) or by sending a message directly to [Messenger App](http://m.me/sharingAmazing).
+First you need to like and send a message to this [Facebook Page](https://www.facebook.com/sharingamazing) or by sending a message directly to [Messenger App](http://m.me/sharingAmazing).
 
 After sending (مرحبا) to the page the app will communicate back a link (تنظيم ختمة جماعية) where a user can initiate a **Takharoubt** or (إنضمام إلى ختمة جماعية).
 
