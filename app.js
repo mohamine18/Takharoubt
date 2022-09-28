@@ -9,6 +9,7 @@ const { pageNotFound, globalErrorhandler } = require("./controllers/error");
 const app = express();
 
 const cronJob = require("./utils/cron");
+const bot = require("./controllers/viber");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -19,6 +20,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", homeRouter);
 app.use("/webhook", webhookRouter);
+app.use("/viber/webhook", bot.middleware());
 
 app.use("*", pageNotFound);
 app.use(globalErrorhandler);
