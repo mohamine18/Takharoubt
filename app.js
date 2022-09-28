@@ -14,16 +14,24 @@ const bot = require("./controllers/viber");
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+// used variables in routes because of viber Error type
 // app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(bodyParser.json());
-// used variables in routes because of viber Error type
-const bodyParserUrlencoded = bodyParser.urlencoded({ extended: true });
-const bodyParserJson = bodyParser.json();
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", bodyParserUrlencoded, bodyParserJson, homeRouter);
-app.use("/webhook", bodyParserUrlencoded, bodyParserJson, webhookRouter);
+app.use(
+  "/",
+  bodyParser.urlencoded({ extended: true }),
+  bodyParser.json(),
+  homeRouter
+);
+app.use(
+  "/webhook",
+  bodyParser.urlencoded({ extended: true }),
+  bodyParser.json(),
+  webhookRouter
+);
 app.use("/viber/webhook", bot.middleware());
 
 app.use("*", pageNotFound);
