@@ -101,7 +101,7 @@ const greetings = catchAsync(async (senderPsid) => {
     {
       type: "web_url",
       title: text.createRoom,
-      url: `${process.env.WEBSITE_URL}/create-a-room?psid=${senderPsid}`,
+      url: `${process.env.WEBSITE_URL}/create-a-room?psid=${senderPsid}&platform=facebook`,
       webview_height_ratio: "full",
       webview_share_button: "hide",
       messenger_extensions: true,

@@ -4,6 +4,8 @@ const TextMessage = require("viber-bot").Message.Text;
 const KeyboardMessage = require("viber-bot").Message.Keyboard;
 const UrlMessage = require("viber-bot").Message.Url;
 
+const keyboardJson = require("../utils/keyboardViber");
+
 const bot = new ViberBot({
   authToken: process.env.VIBER_AUTH_TOKEN,
   name: "Takharoubt",
@@ -26,6 +28,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   if (!(message instanceof TextMessage)) {
     say(response, `Sorry. I can only understand text messages.`);
   }
+  response.send(new KeyboardMessage(keyboardJson(response.userProfile.id)));
 });
 
 bot.onTextMessage(/./, (message, response) => {

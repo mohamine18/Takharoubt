@@ -1,3 +1,5 @@
+const text = require("./text");
+
 const KEYBOARD_JSON = (senderPsid) => {
   return {
     keyboard: {
@@ -9,8 +11,13 @@ const KEYBOARD_JSON = (senderPsid) => {
           Rows: 1,
           BgColor: "#2db9b9",
           ActionType: "open-url",
-          ActionBody: `${process.env.WEBSITE_URL}/create-a-room?psid=${senderPsid}`,
-          Text: "Key text",
+          ActionBody: `${process.env.WEBSITE_URL}/create-a-room?psid=${senderPsid}&platform=viber`,
+          OpenURLType: "internal",
+          InternalBrowser: {
+            Mode: "fullscreen",
+            CustomTitle: text.createRoom,
+          },
+          Text: text.createRoom,
           TextVAlign: "middle",
           TextHAlign: "center",
           TextSize: "regular",
