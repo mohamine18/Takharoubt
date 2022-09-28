@@ -12,9 +12,9 @@ exports.globalErrorhandler = (err, req, res, next) => {
       link: process.env.MESSENGER_LINK,
     });
   }
-  new Email().sendGlobalError(err.name, err);
-  //   console.log("error from global error handler Name =>", err.name);
-  //   console.log("error from global error handler =>", err);
+  // new Email().sendGlobalError(err.name, err);
+  console.log("error from global error handler Name =>", err.name);
+  console.log("error from global error handler =>", err);
   res.render("serverError", {
     link: process.env.MESSENGER_LINK,
   });

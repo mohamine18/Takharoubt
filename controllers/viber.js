@@ -29,6 +29,10 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 bot.onTextMessage("hello", (message, response) => {
   console.log("response: " + response);
   console.log("message: " + message);
+  say(
+    response,
+    `Hi there ${response.userProfile.name}. I am ${bot.name}! Feel free to ask me if a web site is down for everyone or just you. Just send me a name of a website and I'll do the rest!`
+  );
 });
 
 module.exports = bot;
