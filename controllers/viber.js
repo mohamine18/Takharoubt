@@ -1,6 +1,8 @@
 const ViberBot = require("viber-bot").Bot;
 const BotEvents = require("viber-bot").Events;
 const TextMessage = require("viber-bot").Message.Text;
+const KeyboardMessage = require("viber-bot").Message.Keyboard;
+const UrlMessage = require("viber-bot").Message.Url;
 
 const bot = new ViberBot({
   authToken: process.env.VIBER_AUTH_TOKEN,
@@ -15,7 +17,7 @@ function say(response, message) {
 bot.onSubscribe((response) => {
   say(
     response,
-    `Hi there ${response.userProfile.name}. I am ${bot.name}! Feel free to ask me if a web site is down for everyone or just you. Just send me a name of a website and I'll do the rest!`
+    `Hi there ${response.userProfile.name}. I am ${bot.name}! this is id ${response.userProfile.id}`
   );
 });
 
@@ -27,11 +29,9 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 });
 
 bot.onTextMessage(/./, (message, response) => {
-  console.log("response: " + response);
-  console.log("message: " + message);
   say(
     response,
-    `Hi there ${response.userProfile.name}. I am ${bot.name}! Feel free to ask me if a web site is down for everyone or just you. Just send me a name of a website and I'll do the rest!`
+    `Hi there ${response.userProfile.name}. I am ${bot.name}! this is id ${response.userProfile.id}`
   );
 });
 
