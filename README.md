@@ -52,4 +52,5 @@ A user is limited to created 5 active divisions, if the number is exceeded the u
 ## Basic information
 
 This project is created by @mohamine18
+
 Email Address: mohamine19@gmail.com
