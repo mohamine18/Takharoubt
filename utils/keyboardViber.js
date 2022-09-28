@@ -1,6 +1,6 @@
 const text = require("./text");
 
-const KEYBOARD_JSON = (senderPsid) => {
+exports.keyboardJson = (senderPsid) => {
   return {
     keyboard: {
       DefaultHeight: false,
