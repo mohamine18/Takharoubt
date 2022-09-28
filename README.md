@@ -45,9 +45,9 @@ A user is limited to created 5 active divisions, if the number is exceeded the u
 
 ## UpComing features:
 
-- [x] Add Viber and WhatsApp for global experience
-- [x] Add spotify if the reader want to listen to his selected division
-- [x] Send **Takharoubt** pictures instead of text using puppeteer
+- [ ] Add Viber and WhatsApp for global experience
+- [ ] Add spotify if the reader want to listen to his selected division
+- [ ] Send **Takharoubt** pictures instead of text using puppeteer
 
 ## Basic information
 
