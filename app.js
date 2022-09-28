@@ -14,7 +14,7 @@ const bot = require("./controllers/viber");
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 const bodyParserJson = bodyParser.json();
 // app.use(bodyParserJson);
 app.use(express.static(path.join(__dirname, "public")));
