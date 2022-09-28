@@ -7,7 +7,7 @@ module.exports = class Email {
     this.from = process.env.EMAIL_FROM;
   }
 
-  message(template, subject) {
+  message(subject, template) {
     return {
       from: this.from,
       to: this.to,
@@ -19,7 +19,7 @@ module.exports = class Email {
   async sendGlobalError(errorName, errorStack) {
     await sgMail.send(
       this.message(
-        "Error from Global Error handler",
+        "Takharoubt Error handler",
         `<h3>Error name => ${errorName}</h3><p>Error stack => \n ${errorStack}</p>`
       )
     );
