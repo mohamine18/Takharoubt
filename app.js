@@ -15,12 +15,11 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 // app.use(bodyParser.urlencoded({ extended: true }));
-const bodyParserJson = bodyParser.json();
-// app.use(bodyParserJson);
+// app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", bodyParserJson, homeRouter);
-app.use("/webhook", bodyParserJson, webhookRouter);
+app.use("/", homeRouter);
+app.use("/webhook", webhookRouter);
 app.use("/viber/webhook", bot.middleware());
 
 app.use("*", pageNotFound);
