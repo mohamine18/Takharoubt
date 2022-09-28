@@ -26,7 +26,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   }
 });
 
-bot.onTextMessage("hello", (message, response) => {
+bot.onTextMessage(/./, (message, response) => {
   console.log("response: " + response);
   console.log("message: " + message);
   say(
