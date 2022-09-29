@@ -4,7 +4,7 @@ const TextMessage = require("viber-bot").Message.Text;
 const KeyboardMessage = require("viber-bot").Message.Keyboard;
 const UrlMessage = require("viber-bot").Message.Url;
 
-const textMessages = require("../utils/text");
+const text = require("../utils/text");
 
 const bot = new ViberBot({
   authToken: process.env.VIBER_AUTH_TOKEN,
@@ -25,14 +25,15 @@ function keyboard(response) {
           Columns: 6,
           Rows: 1,
           BgColor: "#009000",
+          Silent: true,
           ActionType: "open-url",
           OpenURLType: "internal",
           InternalBrowser: {
             Mode: "fullscreen",
-            CustomTitle: textMessages.createRoom,
+            CustomTitle: text.createRoom,
           },
           ActionBody: `${process.env.WEBSITE_URL}/create-a-room?psid=${response.userProfile.id}&platform=viber`,
-          Text: `<font color="#ffffff">${textMessages.createRoom}</font>`,
+          Text: `<font color="#ffffff">${text.createRoom}</font>`,
           TextVAlign: "middle",
           TextHAlign: "center",
           TextSize: "medium",
@@ -42,8 +43,8 @@ function keyboard(response) {
           Rows: 1,
           BgColor: "#009000",
           ActionType: "reply",
-          ActionBody: `${textMessages.enterRoomCode}`,
-          Text: `<font color="#ffffff">${textMessages.joinRoom}</font>`,
+          ActionBody: `${text.enterRoomCode}`,
+          Text: `<font color="#ffffff">${text.joinRoom}</font>`,
           TextVAlign: "middle",
           TextHAlign: "center",
           TextSize: "medium",
@@ -71,10 +72,8 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
 bot.onTextMessage(/./, (message, response) => {
   keyboard(response);
-  say(
-    response,
-    `Hi there ${response.userProfile.name}. I am ${bot.name}! this is id ${response.userProfile.id}`
-  );
+  console.log(message);
+  say(response, `${text.default}`);
 });
 
 module.exports = bot;
