@@ -1,5 +1,5 @@
 const moment = require("moment");
-
+const { image_url } = require("../utils/imageUrl");
 const Email = require("../utils/mail");
 const catchAsync = require("../utils/catchAsync");
 const { text } = require("../utils/text");
@@ -19,7 +19,12 @@ exports.home = (req, res) => {
 };
 
 exports.createRoom = (req, res) => {
-  res.render("createRoom");
+  res.render("createRoom", {
+    pageTitle: text.pageTitle,
+    imageUrl: image_url[Math.floor(Math.random() * 10) + 1],
+    description: text.help,
+    url: process.env.WEBSITE_URL,
+  });
 };
 
 exports.redirectPage = (req, res) => {
