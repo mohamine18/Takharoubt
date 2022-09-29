@@ -38,6 +38,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 });
 
 bot.onTextMessage(/./, (message, response) => {
+  console.log(message);
   if (message.text === "مرحبا") {
     say(response, text.default);
     say(response, text.menu);
