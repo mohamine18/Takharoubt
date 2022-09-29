@@ -42,15 +42,17 @@ bot.onTextMessage(/./, (message, response) => {
   console.log(message.text.length);
   switch (message.text.toLowerCase()) {
     case "hello":
-      say(response, text.help);
-      say(response, text.how);
+      say(response, text.marhaba);
+      say(response, text.menu);
       break;
     case "joinRoom":
       say(response, text.enterRoomCode);
       break;
     case "help":
-      say(response, text.marhaba);
-      say(response, text.menu);
+      say(response, text.help);
+      say(response, text.how);
+      break;
+    case /^(https|http)/:
       break;
     default:
       say(response, text.default);
