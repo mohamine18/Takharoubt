@@ -37,8 +37,20 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   }
 });
 
-bot.onTextMessage(/^(marhaba|help|code)/, (message, response) => {
-  say(response, `${text.default}`);
+bot.onTextMessage(/./, (message, response) => {
+  if (message.text === "مرحبا") {
+    say(response, text.default);
+    say(response, text.menu);
+    return;
+  }
+  if (message.text === "إنضمام إلى ختمة جماعية") {
+    say(response, text.enterRoomCode);
+    return;
+  }
+  if (message.text === "مساعدة") {
+    say(response, text.help);
+    say(response, text.menu);
+  }
 });
 
 module.exports = bot;
