@@ -3,8 +3,8 @@ const { text } = require("./text");
 exports.keyboardJson = (senderPsid) => {
   return {
     Type: "keyboard",
-    min_api_version: 7,
-    InputFieldState: "hidden",
+    min_api_version: 4,
+    InputFieldState: "minimized",
     Buttons: [
       {
         Columns: 6,
