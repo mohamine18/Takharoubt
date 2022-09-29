@@ -4,7 +4,7 @@ const TextMessage = require("viber-bot").Message.Text;
 const KeyboardMessage = require("viber-bot").Message.Keyboard;
 const UrlMessage = require("viber-bot").Message.Url;
 
-const text = require("../utils/text");
+const textMessages = require("../utils/text");
 
 const bot = new ViberBot({
   authToken: process.env.VIBER_AUTH_TOKEN,
@@ -29,10 +29,10 @@ function keyboard(response) {
           OpenURLType: "internal",
           InternalBrowser: {
             Mode: "fullscreen",
-            CustomTitle: text.createRoom,
+            CustomTitle: textMessages.createRoom,
           },
           ActionBody: `${process.env.WEBSITE_URL}/create-a-room?psid=${response.userProfile.id}&platform=viber`,
-          Text: `<font color=\"#fffff\">${text.createRoom}</font>`,
+          Text: `<font color="#ffffff">${textMessages.createRoom}</font>`,
           TextVAlign: "middle",
           TextHAlign: "center",
           TextSize: "medium",
@@ -42,8 +42,8 @@ function keyboard(response) {
           Rows: 1,
           BgColor: "#009000",
           ActionType: "reply",
-          ActionBody: `${text.enterRoomCode}`,
-          Text: `<font color=\"#fffff\">${text.joinRoom}</font>`,
+          ActionBody: `${textMessages.enterRoomCode}`,
+          Text: `<font color="#ffffff">${textMessages.joinRoom}</font>`,
           TextVAlign: "middle",
           TextHAlign: "center",
           TextSize: "medium",
