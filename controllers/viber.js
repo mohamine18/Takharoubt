@@ -20,6 +20,7 @@ function keyboard(response) {
   response.send(
     new KeyboardMessage({
       Type: "keyboard",
+      min_api_version: 7,
       Buttons: [
         {
           Columns: 6,
