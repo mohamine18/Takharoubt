@@ -4,7 +4,7 @@ const TextMessage = require("viber-bot").Message.Text;
 const KeyboardMessage = require("viber-bot").Message.Keyboard;
 const UrlMessage = require("viber-bot").Message.Url;
 
-const text = require("../utils/text");
+const { text } = require("../utils/text");
 
 const bot = new ViberBot({
   authToken: process.env.VIBER_AUTH_TOKEN,
