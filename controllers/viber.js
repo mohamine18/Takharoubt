@@ -39,21 +39,22 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
 bot.onTextMessage(/./, (message, response) => {
   console.log(message);
-  if (message.TextMessage.text.trim() === "مرحبا") {
-    say(response, text.default);
-    say(response, text.menu);
-    return;
+  switch (message.text) {
+    case "مرحبا":
+      say(response, text.marhaba);
+      say(response, text.menu);
+      break;
+    case "إنضمام إلى ختمة جماعية":
+      say(response, text.enterRoomCode);
+      break;
+    case "مساعدة":
+      say(response, text.marhaba);
+      say(response, text.menu);
+      break;
+    default:
+      say(response, text.default);
+      break;
   }
-  if (message.TextMessage.text.trim() === "إنضمام إلى ختمة جماعية") {
-    say(response, text.enterRoomCode);
-    return;
-  }
-  if (message.TextMessage.text.trim() === "مساعدة") {
-    say(response, text.help);
-    say(response, text.menu);
-    return;
-  }
-  say(response, text.default);
 });
 
 module.exports = bot;
