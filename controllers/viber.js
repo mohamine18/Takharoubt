@@ -38,7 +38,8 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 });
 
 bot.onTextMessage(/./, (message, response) => {
-  console.log(message);
+  console.log(message.text);
+  console.log(message.text.length);
   switch (message.text) {
     case "مرحبا":
       say(response, text.marhaba);
