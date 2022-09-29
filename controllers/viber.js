@@ -15,69 +15,14 @@ const bot = new ViberBot({
 
 function say(response, message) {
   response.send(
-    new TextMessage(
-      message,
-      keyboardJson(response.userProfile.id),
-      {},
-      null,
-      null,
-      7
-    )
+    new TextMessage(message, keyboardJson(response.userProfile.id))
   );
 }
 
-// function keyboard(response) {
-//   response.send(
-//     new KeyboardMessage(
-//       {
-//         Type: "keyboard",
-//         min_api_version: 7,
-//         InputFieldState: "hidden",
-//         Buttons: [
-//           {
-//             Columns: 6,
-//             Rows: 1,
-//             BgColor: "#009000",
-//             Silent: true,
-//             ActionType: "open-url",
-//             OpenURLType: "internal",
-//             InternalBrowser: {
-//               Mode: "fullscreen",
-//               CustomTitle: text.createRoom,
-//             },
-//             ActionBody: `${process.env.WEBSITE_URL}/create-a-room?psid=${response.userProfile.id}&platform=viber`,
-//             Text: `<font color="#ffffff">${text.createRoom}</font>`,
-//             TextVAlign: "middle",
-//             TextHAlign: "center",
-//             TextSize: "medium",
-//           },
-//           {
-//             Columns: 6,
-//             Rows: 1,
-//             BgColor: "#009000",
-//             ActionType: "reply",
-//             ActionBody: `${text.enterRoomCode}`,
-//             Text: `<font color="#ffffff">${text.joinRoom}</font>`,
-//             TextVAlign: "middle",
-//             TextHAlign: "center",
-//             TextSize: "medium",
-//           },
-//         ],
-//       },
-//       {},
-//       null,
-//       null,
-//       7
-//     )
-//   );
-// }
-
 bot.onSubscribe((response) => {
   // keyboard(response);
-  say(
-    response,
-    `Hi there ${response.userProfile.name}. I am ${bot.name}! this is id ${response.userProfile.id}`
-  );
+  say(response, text.marhaba);
+  say(response, text.menu);
 });
 
 bot.onConversationStarted((userProfile, isSubscribed, context, onFinish) =>
@@ -85,10 +30,7 @@ bot.onConversationStarted((userProfile, isSubscribed, context, onFinish) =>
     new TextMessage(
       text.marhaba,
       keyboardJson(userProfile.id),
-      {},
-      null,
-      null,
-      7
+      say(response, text.menu)
     )
   )
 );
@@ -101,7 +43,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   }
 });
 
-bot.onTextMessage(/./, (message, response) => {
+bot.onTextMessage(/^[a-zA-Z]/, (message, response) => {
   // keyboard(response);
   console.log(message);
   say(response, `${text.default}`);
