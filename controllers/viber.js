@@ -14,10 +14,11 @@ const bot = new ViberBot({
 });
 
 function say(response, message) {
-  response.send(new KeyboardMessage(keyboardJson(response.userProfile.id)));
   return new Promise((resolve) => {
     setTimeout(() => {
-      response.send(new TextMessage(message));
+      response.send(
+        new TextMessage(message, keyboardJson(response.userProfile.id))
+      );
       resolve("success");
     }, 1500);
   });
