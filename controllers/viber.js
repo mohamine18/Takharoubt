@@ -22,6 +22,7 @@ function keyboard(response) {
       {
         Type: "keyboard",
         min_api_version: 7,
+        InputFieldState: "hidden",
         Buttons: [
           {
             Columns: 6,
