@@ -25,12 +25,9 @@ bot.onSubscribe((response) => {
   say(response, text.menu);
 });
 
-bot.onConversationStarted((userProfile, isSubscribed, context, onFinish) =>
-  onFinish(
-    new TextMessage(text.marhaba, keyboardJson(userProfile.id)),
-    new TextMessage(text.menu, keyboardJson(userProfile.id))
-  )
-);
+bot.onConversationStarted((userProfile, isSubscribed, context, onFinish) => {
+  onFinish(new TextMessage(text.marhaba, keyboardJson(userProfile.id)));
+});
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   // keyboard(response);
@@ -40,9 +37,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   }
 });
 
-bot.onTextMessage(/^[a-zA-Z]/, (message, response) => {
-  // keyboard(response);
-  console.log(message);
+bot.onTextMessage(/^[a-z ]*/, (message, response) => {
   say(response, `${text.default}`);
 });
 
