@@ -39,19 +39,21 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 
 bot.onTextMessage(/./, (message, response) => {
   console.log(message);
-  if (message.text === "مرحبا") {
+  if (message.TextMessage.text.trim() === "مرحبا") {
     say(response, text.default);
     say(response, text.menu);
     return;
   }
-  if (message.text === "إنضمام إلى ختمة جماعية") {
+  if (message.TextMessage.text.trim() === "إنضمام إلى ختمة جماعية") {
     say(response, text.enterRoomCode);
     return;
   }
-  if (message.text === "مساعدة") {
+  if (message.TextMessage.text.trim() === "مساعدة") {
     say(response, text.help);
     say(response, text.menu);
+    return;
   }
+  say(response, text.default);
 });
 
 module.exports = bot;
