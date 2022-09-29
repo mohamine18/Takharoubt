@@ -57,7 +57,7 @@ bot.onTextMessage(/./, async (message, response) => {
       await say(response, text.help);
       await say(response, text.how);
       break;
-    case receivedWord.match(/^[h](ttps|ttp)/)?.input:
+    case receivedWord.toLowerCase().match(/^[h](ttps|ttp)/)?.input:
       break;
     default:
       await say(response, text.default);
