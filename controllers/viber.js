@@ -41,14 +41,14 @@ bot.onTextMessage(/./, (message, response) => {
   console.log(message.text);
   console.log(message.text.length);
   switch (message.text) {
-    case "مرحبا":
+    case "hello":
       say(response, text.marhaba);
       say(response, text.menu);
       break;
-    case "إنضمام إلى ختمة جماعية":
+    case "joinRoom":
       say(response, text.enterRoomCode);
       break;
-    case "مساعدة":
+    case "help":
       say(response, text.marhaba);
       say(response, text.menu);
       break;

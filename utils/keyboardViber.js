@@ -28,7 +28,7 @@ exports.keyboardJson = (senderPsid) => {
         Rows: 1,
         BgColor: "#009000",
         ActionType: "reply",
-        ActionBody: text.enterRoomCode,
+        ActionBody: "joinRoom",
         Text: `<font color="#ffffff"><b>${text.joinRoom}</b></font>`,
         TextVAlign: "middle",
         TextHAlign: "center",
