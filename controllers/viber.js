@@ -15,7 +15,14 @@ const bot = new ViberBot({
 
 function say(response, message) {
   response.send(
-    new TextMessage(message, keyboardJson(response.userProfile.id))
+    new TextMessage(
+      message,
+      keyboardJson(response.userProfile.id),
+      {},
+      null,
+      null,
+      7
+    )
   );
 }
 
@@ -57,7 +64,7 @@ function say(response, message) {
 //           },
 //         ],
 //       },
-//       null,
+//       {},
 //       null,
 //       null,
 //       7
@@ -72,6 +79,19 @@ bot.onSubscribe((response) => {
     `Hi there ${response.userProfile.name}. I am ${bot.name}! this is id ${response.userProfile.id}`
   );
 });
+
+bot.onConversationStarted((userProfile, isSubscribed, context, onFinish) =>
+  onFinish(
+    new TextMessage(
+      text.marhaba,
+      keyboardJson(userProfile.id),
+      {},
+      null,
+      null,
+      7
+    )
+  )
+);
 
 bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   // keyboard(response);
