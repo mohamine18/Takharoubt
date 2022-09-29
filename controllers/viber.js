@@ -39,21 +39,21 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 });
 
 bot.onTextMessage(/./, (message, response) => {
-  console.log(message.text);
-  console.log(message.text.length);
-  switch (message.text.toLowerCase()) {
+  const receivedWord = message.text;
+  console.log(receivedWord.match(/^[h](ttps|ttp)/)?.input);
+  switch (receivedWord.toLowerCase()) {
     case "hello":
       say(response, text.marhaba);
       say(response, text.menu);
       break;
-    case "joinRoom":
+    case "joinroom":
       say(response, text.enterRoomCode);
       break;
     case "help":
       say(response, text.help);
       say(response, text.how);
       break;
-    case message.text.match(/^[h](ttps|ttp)/)?.input:
+    case receivedWord.match(/^[h](ttps|ttp)/)?.input:
       break;
     default:
       say(response, text.default);
