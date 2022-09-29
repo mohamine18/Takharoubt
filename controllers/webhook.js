@@ -50,7 +50,10 @@ exports.postWebhook = (req, res) => {
 const handleMessage = catchAsync(async (senderPsid, receivedMessage) => {
   //Check if the message contain a text
   const receivedWord = receivedMessage.text;
-  switch (receivedWord) {
+  console.log(
+    receivedWord.match(/^(takharoubt)-(hizb|juz|manzil)-([a-zA-Z0-9]){5}/)
+  );
+  switch (receivedWord.toLowerCase()) {
     case "hello":
       greetings(senderPsid);
       break;

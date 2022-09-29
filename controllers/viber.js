@@ -40,10 +40,10 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
 bot.onTextMessage(/./, (message, response) => {
   console.log(message.text);
   console.log(message.text.length);
-  switch (message.text) {
+  switch (message.text.toLowerCase()) {
     case "hello":
-      say(response, text.marhaba);
-      say(response, text.menu);
+      say(response, text.help);
+      say(response, text.how);
       break;
     case "joinRoom":
       say(response, text.enterRoomCode);
