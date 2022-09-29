@@ -15,9 +15,8 @@ const bot = new ViberBot({
 
 function say(response, message) {
   setTimeout(() => {
-    response.send(
-      new TextMessage(message, keyboardJson(response.userProfile.id))
-    );
+    response.send(new TextMessage(message));
+    response.send(new KeyboardMessage(keyboardJson(response.userProfile.id)));
   }, 1500);
 }
 
@@ -54,7 +53,7 @@ bot.onTextMessage(/./, (message, response) => {
       say(response, text.help);
       say(response, text.how);
       break;
-    case /^[h](ttps|ttp)/:
+    case message.text.match(/^[h](ttps|ttp)/)?.input:
       break;
     default:
       say(response, text.default);
