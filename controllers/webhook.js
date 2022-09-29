@@ -51,7 +51,7 @@ const handleMessage = catchAsync(async (senderPsid, receivedMessage) => {
   //Check if the message contain a text
   const receivedWord = receivedMessage.text;
   console.log(
-    receivedWord.match(/^(takharoubt)-(hizb|juz|manzil)-([a-zA-Z0-9]){5}/)
+    /^(takharoubt)-(hizb|juz|manzil)-([a-zA-Z0-9]){5}/.test(receivedWord)
   );
   switch (receivedWord.toLowerCase()) {
     case "hello":
