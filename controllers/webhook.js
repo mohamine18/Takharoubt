@@ -51,10 +51,10 @@ const handleMessage = catchAsync(async (senderPsid, receivedMessage) => {
   //Check if the message contain a text
   const receivedWord = receivedMessage.text;
   switch (receivedWord) {
-    case "مرحبا":
+    case "hello":
       greetings(senderPsid);
       break;
-    case "مساعدة":
+    case "help":
       await callSendAPI(senderPsid, textTemplate(text.help));
       await callSendAPI(senderPsid, textTemplate(text.how));
       break;
