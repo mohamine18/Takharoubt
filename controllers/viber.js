@@ -37,7 +37,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
   }
 });
 
-bot.onTextMessage(/^[a-z ]*/, (message, response) => {
+bot.onTextMessage(/^(marhaba|help|code)/, (message, response) => {
   say(response, `${text.default}`);
 });
 
