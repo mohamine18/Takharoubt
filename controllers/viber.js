@@ -15,14 +15,7 @@ const bot = new ViberBot({
 
 function say(response, message) {
   response.send(
-    new TextMessage(
-      message,
-      keyboardJson(response.userProfile.id),
-      null,
-      null,
-      null,
-      7
-    )
+    new TextMessage(message, keyboardJson(response.userProfile.id))
   );
 }
 
