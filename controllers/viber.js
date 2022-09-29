@@ -27,11 +27,8 @@ bot.onSubscribe((response) => {
 
 bot.onConversationStarted((userProfile, isSubscribed, context, onFinish) =>
   onFinish(
-    new TextMessage(
-      text.marhaba,
-      keyboardJson(userProfile.id),
-      say(response, text.menu)
-    )
+    new TextMessage(text.marhaba, keyboardJson(userProfile.id)),
+    new TextMessage(text.menu, keyboardJson(userProfile.id))
   )
 );
 
