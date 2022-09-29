@@ -14,9 +14,11 @@ const bot = new ViberBot({
 });
 
 function say(response, message) {
-  response.send(
-    new TextMessage(message, keyboardJson(response.userProfile.id))
-  );
+  setTimeout(() => {
+    response.send(
+      new TextMessage(message, keyboardJson(response.userProfile.id))
+    );
+  }, 1500);
 }
 
 bot.onSubscribe((response) => {
@@ -52,7 +54,7 @@ bot.onTextMessage(/./, (message, response) => {
       say(response, text.help);
       say(response, text.how);
       break;
-    case /^(https|http)/:
+    case /^[h](ttps|ttp)/:
       break;
     default:
       say(response, text.default);
