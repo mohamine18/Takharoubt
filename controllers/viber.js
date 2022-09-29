@@ -16,18 +16,7 @@ function say(response, message) {
   response.send(new TextMessage(message));
 }
 
-bot.onSubscribe((response) => {
-  say(
-    response,
-    `Hi there ${response.userProfile.name}. I am ${bot.name}! this is id ${response.userProfile.id}`
-  );
-});
-
-bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
-  // This sample bot can answer only text messages, let's make sure the user is aware of that.
-  if (!(message instanceof TextMessage)) {
-    say(response, `Sorry. I can only understand text messages.`);
-  }
+function keyboard(response) {
   response.send(
     new KeyboardMessage({
       Type: "keyboard",
@@ -35,25 +24,53 @@ bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
         {
           Columns: 6,
           Rows: 1,
-          BgColor: "#2db9b9",
+          BgColor: "#009000",
           ActionType: "open-url",
-          ActionBody: `${process.env.WEBSITE_URL}/create-a-room?psid=${response.userProfile.id}&platform=viber`,
           OpenURLType: "internal",
           InternalBrowser: {
             Mode: "fullscreen",
             CustomTitle: text.createRoom,
           },
-          Text: text.createRoom,
+          ActionBody: `${process.env.WEBSITE_URL}/create-a-room?psid=${response.userProfile.id}&platform=viber`,
+          Text: `<font color=\"#fffff\">${text.createRoom}</font>`,
           TextVAlign: "middle",
           TextHAlign: "center",
-          TextSize: "regular",
+          TextSize: "medium",
+        },
+        {
+          Columns: 6,
+          Rows: 1,
+          BgColor: "#009000",
+          ActionType: "reply",
+          ActionBody: `${text.enterRoomCode}`,
+          Text: `<font color=\"#fffff\">${text.joinRoom}</font>`,
+          TextVAlign: "middle",
+          TextHAlign: "center",
+          TextSize: "medium",
         },
       ],
     })
   );
+}
+
+bot.onSubscribe((response) => {
+  keyboard(response);
+  say(
+    response,
+    `Hi there ${response.userProfile.name}. I am ${bot.name}! this is id ${response.userProfile.id}`
+  );
+});
+
+bot.on(BotEvents.MESSAGE_RECEIVED, (message, response) => {
+  keyboard(response);
+  // This sample bot can answer only text messages, let's make sure the user is aware of that.
+  if (!(message instanceof TextMessage)) {
+    say(response, `Sorry. I can only understand text messages.`);
+  }
 });
 
 bot.onTextMessage(/./, (message, response) => {
+  keyboard(response);
   say(
     response,
     `Hi there ${response.userProfile.name}. I am ${bot.name}! this is id ${response.userProfile.id}`
