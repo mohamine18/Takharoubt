@@ -10,6 +10,10 @@ const {
   textTemplate,
 } = require("../utils/template");
 
+const TextMessage = require("viber-bot").Message.Text;
+const bot = require("./viber");
+const { keyboardJson } = require("../utils/keyboardViber");
+
 const { hizb, juz, manzil } = require("../data/data");
 
 const Division = require("../models/division");
@@ -51,7 +55,13 @@ exports.getFormData = catchAsync(async (req, res) => {
         );
         break;
       case "viber":
-        // ! viber code goes here
+        bot.sendMessage({ id: psid }, [
+          new TextMessage(text.limit, keyboardJson(psid)),
+          new TextMessage(
+            text.limitExplanation + divisionCount.length,
+            keyboardJson(psid)
+          ),
+        ]);
         break;
       case "telegram":
         // ! telegram code goes here
@@ -75,7 +85,11 @@ exports.getFormData = catchAsync(async (req, res) => {
         await callSendAPI(psid, textTemplate(text.shareCode));
         break;
       case "viber":
-        // ! viber code goes here
+        bot.sendMessage({ id: psid }, [
+          new TextMessage(text.Received, keyboardJson(psid)),
+          new TextMessage(div.code, keyboardJson(psid)),
+          new TextMessage(text.shareCode, keyboardJson(psid)),
+        ]);
         break;
       case "telegram":
         // ! telegram code goes here

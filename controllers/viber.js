@@ -41,9 +41,9 @@ bot.onSubscribe(async (response) => {
   await say(response, text.menu);
 });
 
-bot.onConversationStarted((userProfile, isSubscribed, context, onFinish) => {
-  onFinish(new TextMessage(text.marhaba, keyboardJson(userProfile.id)));
-});
+// bot.onConversationStarted((userProfile, isSubscribed, context, onFinish) => {
+//   onFinish(new TextMessage(text.marhaba, keyboardJson(userProfile.id)));
+// });
 
 bot.on(BotEvents.MESSAGE_RECEIVED, async (message, response) => {
   // keyboard(response);
