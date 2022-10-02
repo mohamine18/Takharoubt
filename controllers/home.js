@@ -198,17 +198,17 @@ exports.selectedDivision = catchAsync(async (req, res) => {
       await callSendAPI(psid, textTemplate(text.prayer));
       break;
     case "viber":
-      bot.sendMessage({ id: psid }, [
+      await bot.sendMessage({ id: psid }, [
         new TextMessage(text.selected, keyboardJson(psid)),
         new TextMessage(divisionText, keyboardJson(psid)),
       ]);
       if (divisionUpdated.comment !== "") {
-        bot.sendMessage({ id: psid }, [
+        await bot.sendMessage({ id: psid }, [
           new TextMessage(text.conditions, keyboardJson(psid)),
           new TextMessage(divisionUpdated.comment, keyboardJson(psid)),
         ]);
       }
-      bot.sendMessage(
+      await bot.sendMessage(
         { id: psid },
         new TextMessage(text.timer, keyboardJson(psid))
       );
@@ -218,7 +218,7 @@ exports.selectedDivision = catchAsync(async (req, res) => {
           const dateDay = moment(divisionUpdated.createdAt)
             .add("1", "days")
             .format("dddd, D MMMM YYYY");
-          bot.sendMessage(
+          await bot.sendMessage(
             { id: psid },
             new TextMessage(dateDay, keyboardJson(psid))
           );
@@ -227,7 +227,7 @@ exports.selectedDivision = catchAsync(async (req, res) => {
           const dateWeek = moment(divisionUpdated.createdAt)
             .add("7", "days")
             .format("dddd, D MMMM YYYY");
-          bot.sendMessage(
+          await bot.sendMessage(
             { id: psid },
             new TextMessage(dateWeek, keyboardJson(psid))
           );
@@ -236,14 +236,14 @@ exports.selectedDivision = catchAsync(async (req, res) => {
           const dateMonth = moment(divisionUpdated.createdAt)
             .add("1", "months")
             .format("dddd, D MMMM YYYY");
-          bot.sendMessage(
+          await bot.sendMessage(
             { id: psid },
             new TextMessage(dateMonth, keyboardJson(psid))
           );
           break;
       }
 
-      bot.sendMessage({ id: psid }, [
+      await bot.sendMessage({ id: psid }, [
         new TextMessage(text.reminder, keyboardJson(psid)),
         new TextMessage(text.prayer, keyboardJson(psid)),
       ]);
