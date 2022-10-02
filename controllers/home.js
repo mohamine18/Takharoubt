@@ -162,6 +162,7 @@ exports.selectedDivision = catchAsync(async (req, res) => {
     { new: true }
   );
   divisionUpdated.checkActive();
+  moment.locale("ar");
   switch (platform) {
     case "messenger":
       await callSendAPI(psid, textTemplate(text.selected));
@@ -171,7 +172,7 @@ exports.selectedDivision = catchAsync(async (req, res) => {
         await callSendAPI(psid, textTemplate(divisionUpdated.comment));
       }
       await callSendAPI(psid, textTemplate(text.timer));
-      moment.locale("ar");
+
       switch (divisionUpdated.period) {
         case "day":
           const dateDay = moment(divisionUpdated.createdAt)
@@ -197,6 +198,56 @@ exports.selectedDivision = catchAsync(async (req, res) => {
       await callSendAPI(psid, textTemplate(text.prayer));
       break;
     case "viber":
+      bot.sendMessage({ id: psid }, [
+        new TextMessage(text.selected, keyboardJson(psid)),
+        new TextMessage(divisionText, keyboardJson(psid)),
+      ]);
+      if (divisionUpdated.comment !== "") {
+        bot.sendMessage({ id: psid }, [
+          new TextMessage(text.conditions, keyboardJson(psid)),
+          new TextMessage(divisionUpdated.comment, keyboardJson(psid)),
+        ]);
+      }
+      bot.sendMessage(
+        { id: psid },
+        new TextMessage(text.timer, keyboardJson(psid))
+      );
+
+      switch (divisionUpdated.period) {
+        case "day":
+          const dateDay = moment(divisionUpdated.createdAt)
+            .add("1", "days")
+            .format("dddd, D MMMM YYYY");
+          bot.sendMessage(
+            { id: psid },
+            new TextMessage(dateDay, keyboardJson(psid))
+          );
+          break;
+        case "week":
+          const dateWeek = moment(divisionUpdated.createdAt)
+            .add("7", "days")
+            .format("dddd, D MMMM YYYY");
+          bot.sendMessage(
+            { id: psid },
+            new TextMessage(dateWeek, keyboardJson(psid))
+          );
+          break;
+        case "month":
+          const dateMonth = moment(divisionUpdated.createdAt)
+            .add("1", "months")
+            .format("dddd, D MMMM YYYY");
+          bot.sendMessage(
+            { id: psid },
+            new TextMessage(dateMonth, keyboardJson(psid))
+          );
+          break;
+      }
+
+      bot.sendMessage({ id: psid }, [
+        new TextMessage(text.reminder, keyboardJson(psid)),
+        new TextMessage(text.prayer, keyboardJson(psid)),
+      ]);
+
       break;
     case "telegram":
       break;
