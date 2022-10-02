@@ -49,7 +49,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, async (message, response) => {
   // keyboard(response);
   // This sample bot can answer only text messages, let's make sure the user is aware of that.
   if (!(message instanceof TextMessage)) {
-    await say(response, `Sorry. I can only understand text messages.`);
+    await say(response, text.default);
   }
 });
 

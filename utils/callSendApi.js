@@ -29,7 +29,7 @@ const callSendAPI = (senderPsid, response) => {
           }
         }
       );
-    }, 500);
+    }, 10);
   });
 };
 
