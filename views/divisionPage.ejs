@@ -3,6 +3,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:title" content="<%= pageTitle %>" />
+    <meta property="og:image" content="<%= imageUrl %>" />
+    <meta property="og:description" content="<%= description %>" />
+    <meta property="og:url" content="<%= url %>" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="627" />
+    <meta property="og:type" content="website" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,22 +26,9 @@
     />
     <link rel="stylesheet" href="/css/divisionPage.css" />
     <script src="/socket.io/socket.io.js"></script>
-    <title>صفحة الختمة الجماعية</title>
+    <title><%= pageTitle %></title>
   </head>
   <body class="container">
-    <script>
-      (function (d, s, id) {
-        var js,
-          fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {
-          return;
-        }
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "//connect.facebook.net/en_US/messenger.Extensions.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      })(document, "script", "Messenger");
-    </script>
     <% if (active) { %>
     <h3>قم بإختيار الورد القرآني</h3>
 

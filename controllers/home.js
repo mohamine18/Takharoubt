@@ -15,7 +15,10 @@ const { hizb, juz, manzil } = require("../data/data");
 const Division = require("../models/division");
 
 exports.home = (req, res) => {
-  res.render("home", { link: process.env.MESSENGER_LINK });
+  res.render("home", {
+    linkMessenger: process.env.MESSENGER_LINK,
+    linkViber: process.env.VIBER_LINK,
+  });
 };
 
 exports.createRoom = (req, res) => {
@@ -29,40 +32,59 @@ exports.createRoom = (req, res) => {
 
 exports.redirectPage = (req, res) => {
   res.render("redirectPage", {
-    link: process.env.MESSENGER_LINK,
+    linkMessenger: process.env.MESSENGER_LINK,
+    linkViber: process.env.VIBER_LINK,
   });
 };
 
 exports.getFormData = catchAsync(async (req, res) => {
   // const psid = "5477668622316338";
-  const psid = req.body.psid;
+  const { psid, platform, method, period, comment } = req.body;
   const divisionCount = await Division.find({ psid: psid, active: true });
-  if (divisionCount.length === 5) {
-    await callSendAPI(psid, textTemplate(text.limit));
-    await callSendAPI(
-      psid,
-      textTemplate(text.limitExplanation + divisionCount.length)
-    );
+  if (divisionCount.length === 2) {
+    switch (platform) {
+      case "messenger":
+        await callSendAPI(psid, textTemplate(text.limit));
+        await callSendAPI(
+          psid,
+          textTemplate(text.limitExplanation + divisionCount.length)
+        );
+        break;
+      case "viber":
+        // ! viber code goes here
+        break;
+      case "telegram":
+        // ! telegram code goes here
+        break;
+      default:
+        break;
+    }
   } else {
     const newDivision = new Division({
       psid,
-      method: req.body.method,
-      period: req.body.period,
-      comment: req.body.comment,
+      platform,
+      method,
+      period,
+      comment,
     });
     const div = await newDivision.save();
-    await callSendAPI(psid, textTemplate(text.Received));
-    await callSendAPI(psid, textTemplate(div.code));
-    await callSendAPI(psid, textTemplate(text.shareCode));
+    switch (platform) {
+      case "messenger":
+        await callSendAPI(psid, textTemplate(text.Received));
+        await callSendAPI(psid, textTemplate(div.code));
+        await callSendAPI(psid, textTemplate(text.shareCode));
+        break;
+      case "viber":
+        // ! viber code goes here
+        break;
+      case "telegram":
+        // ! telegram code goes here
+        break;
+      default:
+        break;
+    }
   }
 
-  res.status(200).json({ message: "success" });
-});
-
-exports.closingPage = catchAsync(async (req, res) => {
-  if (req.body.psid !== 0) {
-    await callSendAPI(req.body.psid, textTemplate(text.close));
-  }
   res.status(200).json({ message: "success" });
 });
 
@@ -84,7 +106,14 @@ exports.divisionPage = catchAsync(async (req, res) => {
     default:
       break;
   }
-  res.render("divisionPage", { data, active: division.active });
+  res.render("divisionPage", {
+    pageTitle: text.joinRoom,
+    imageUrl: image_url[Math.floor(Math.random() * 10) + 1],
+    description: text.roomLink,
+    url: process.env.WEBSITE_URL,
+    data,
+    active: division.active,
+  });
 });
 
 const divisions = (division, data) => {
@@ -106,50 +135,65 @@ const divisions = (division, data) => {
 };
 
 exports.selectedDivision = catchAsync(async (req, res) => {
-  const { psid, index, divisionText, roomCode } = req.body;
+  const { psid, index, divisionText, roomCode, platform } = req.body;
 
-  if (psid !== 0) {
-    const reader = {
-      readersPsid: psid,
-      index: index,
-    };
-    const divisionUpdated = await Division.findOneAndUpdate(
-      { code: roomCode },
-      { $push: { readers: reader } },
-      { new: true }
-    );
-    divisionUpdated.checkActive();
-    await callSendAPI(psid, textTemplate(text.selected));
-    await callSendAPI(psid, textTemplate(divisionText));
-    if (divisionUpdated.comment !== "") {
-      await callSendAPI(psid, textTemplate(text.conditions));
-      await callSendAPI(psid, textTemplate(divisionUpdated.comment));
-    }
-    await callSendAPI(psid, textTemplate(text.timer));
-    moment.locale("ar");
-    switch (divisionUpdated.period) {
-      case "day":
-        const dateDay = moment(divisionUpdated.createdAt)
-          .add("1", "days")
-          .format("dddd, D MMMM YYYY");
-        await callSendAPI(psid, textTemplate(dateDay));
-        break;
-      case "week":
-        const dateWeek = moment(divisionUpdated.createdAt)
-          .add("7", "days")
-          .format("dddd, D MMMM YYYY");
-        await callSendAPI(psid, textTemplate(dateWeek));
-        break;
-      case "month":
-        const dateMonth = moment(divisionUpdated.createdAt)
-          .add("1", "months")
-          .format("dddd, D MMMM YYYY");
-        await callSendAPI(psid, textTemplate(dateMonth));
-        break;
-    }
+  const reader = {
+    readersPsid: psid,
+    platform,
+    index: index,
+  };
+  const divisionUpdated = await Division.findOneAndUpdate(
+    { code: roomCode },
+    { $push: { readers: reader } },
+    { new: true }
+  );
+  divisionUpdated.checkActive();
+  switch (platform) {
+    case "messenger":
+      await callSendAPI(psid, textTemplate(text.selected));
+      await callSendAPI(psid, textTemplate(divisionText));
+      if (divisionUpdated.comment !== "") {
+        await callSendAPI(psid, textTemplate(text.conditions));
+        await callSendAPI(psid, textTemplate(divisionUpdated.comment));
+      }
+      await callSendAPI(psid, textTemplate(text.timer));
+      moment.locale("ar");
+      switch (divisionUpdated.period) {
+        case "day":
+          const dateDay = moment(divisionUpdated.createdAt)
+            .add("1", "days")
+            .format("dddd, D MMMM YYYY");
+          await callSendAPI(psid, textTemplate(dateDay));
+          break;
+        case "week":
+          const dateWeek = moment(divisionUpdated.createdAt)
+            .add("7", "days")
+            .format("dddd, D MMMM YYYY");
+          await callSendAPI(psid, textTemplate(dateWeek));
+          break;
+        case "month":
+          const dateMonth = moment(divisionUpdated.createdAt)
+            .add("1", "months")
+            .format("dddd, D MMMM YYYY");
+          await callSendAPI(psid, textTemplate(dateMonth));
+          break;
+      }
 
-    await callSendAPI(psid, textTemplate(text.reminder));
-    await callSendAPI(psid, textTemplate(text.prayer));
+      await callSendAPI(psid, textTemplate(text.reminder));
+      await callSendAPI(psid, textTemplate(text.prayer));
+      break;
+    case "viber":
+      break;
+    case "telegram":
+      break;
+
+    default:
+      break;
   }
+
   res.status(200).json({ message: "success" });
 });
+
+exports.successCreation = (req, res) => {
+  res.render("success");
+};

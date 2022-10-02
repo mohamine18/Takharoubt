@@ -11,11 +11,11 @@ router
   .get(homeController.createRoom)
   .post(homeController.getFormData);
 
-router.route("/close-page").post(homeController.closingPage);
-
 router.route("/redirect").get(homeController.redirectPage);
 
 router.route("/select-division/:divisionId").get(homeController.divisionPage);
 router.route("/selected-division").post(homeController.selectedDivision);
+
+router.route("/success-creation").get(homeController.successCreation);
 
 module.exports = router;

@@ -1,6 +1,4 @@
-const psidElement = document.getElementById("psid");
 const closeBtn = document.getElementById("closeBtn");
-const createBtn = document.getElementById("create");
 const errorElement = document.getElementById("error");
 const infoElement = document.getElementById("info");
 const methodElement = document.getElementById("method");
@@ -10,37 +8,38 @@ const formElement = document.getElementById("formData");
 
 const methods = ["manzil", "juz", "hizb"];
 const periods = ["day", "week", "month"];
+const platforms = ["messenger", "viber", "telegram"];
 
 const globalUrl = window.location.protocol + "//" + window.location.host;
 
 const urlObject = new URL(window.location.href);
 const psid = urlObject.searchParams.get("psid");
-const psidData = { psid: psid || 0 };
-psidElement.value = psid;
+const platform = urlObject.searchParams.get("platform");
 
-window.extAsyncInit = function () {
-  const isSupported = MessengerExtensions.isInExtension();
-  if (!isSupported) {
+document.addEventListener("DOMContentLoaded", () => {
+  if (!psid || !platform || !platforms.includes(platform)) {
     window.location.replace(`${globalUrl}/redirect`);
   }
-};
+});
 
 closeBtn.addEventListener("click", () => {
-  MessengerExtensions.requestCloseBrowser(
-    function success() {
-      fetch(`${globalUrl}/close-page`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(psidData),
-      }).then((response) => console.log(`message sent: ${response}`));
-    },
-    function error(err) {
-      // an error occurred
-      console.log(`error closing the webview ${err}`);
-    }
-  );
+  switch (platform) {
+    case "messenger":
+      window.location.replace(
+        `${globalUrl}/success-creation?platform=messenger`
+      );
+      break;
+    case "viber":
+      window.location.replace(`${globalUrl}/success-creation?platform=viber`);
+      break;
+    case "telegram":
+      window.location.replace(
+        `${globalUrl}/success-creation?platform=telegram`
+      );
+      break;
+    default:
+      break;
+  }
 });
 
 formElement.addEventListener("submit", (e) => {
@@ -53,30 +52,48 @@ formElement.addEventListener("submit", (e) => {
     errorElement.textContent = "من فضلك قم بإختيار مدة الختمة";
   } else {
     const formData = {
-      psid: psidElement.value,
+      psid: psid,
+      platform: platform,
       method: methodElement.value,
       period: periodElement.value,
       comment: commentElement.value,
     };
 
-    // ! move this inside success function in production
+    document.body.innerHTML = "<div class='lds-dual-ring'></div>";
+
     fetch(`${globalUrl}/create-a-room`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
-    }).then((response) => console.log(`message sent: ${response.json()}`));
-
-    MessengerExtensions.requestCloseBrowser(
-      function success() {},
-      function error(err) {
-        // an error occurred
-        // ! delete this after testing
-        // e.currentTarget.submit();
-        console.log(`error closing the webview ${err}`);
+    }).then((response) => {
+      if (response.ok) {
+        switch (platform) {
+          case "messenger":
+            window.location.replace(
+              `${globalUrl}/success-creation?platform=messenger`
+            );
+            break;
+          case "viber":
+            window.location.replace(
+              `${globalUrl}/success-creation?platform=viber`
+            );
+            break;
+          case "telegram":
+            window.location.replace(
+              `${globalUrl}/success-creation?platform=telegram`
+            );
+            break;
+          default:
+            break;
+        }
+      } else {
+        document.body.innerHTML =
+          "<h2>خطأ في الخادم... يرجى إعادة المحاولة لاحقا</h2>";
+        document.body.classList.add("container");
       }
-    );
+    });
   }
 });
 

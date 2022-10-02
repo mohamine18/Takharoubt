@@ -55,7 +55,6 @@ bot.on(BotEvents.MESSAGE_RECEIVED, async (message, response) => {
 
 bot.onTextMessage(/./, async (message, response) => {
   const receivedWord = message.text;
-  // console.log(receivedWord.match(/^[h](ttps|ttp)/)?.input);
   switch (receivedWord.toLowerCase()) {
     case "hello":
       await say(response, text.marhaba);
@@ -77,11 +76,9 @@ bot.onTextMessage(/./, async (message, response) => {
         code: receivedWord.trim(),
         active: true,
       });
-      console.log("received word: ", receivedWord);
-      console.log("exists: ", exists);
       if (exists) {
-        say(response, text.buttonJoinRoom);
-        sendUrl(
+        await say(response, text.buttonJoinRoom);
+        await sendUrl(
           response,
           `${
             process.env.WEBSITE_URL

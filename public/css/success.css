@@ -1,0 +1,64 @@
+body {
+  font-family: "Amiri", "sans-serif";
+  background-image: url(https://img.freepik.com/free-vector/mandala-illustration_53876-81805.jpg?w=1380&t=st=1663771384~exp=1663771984~hmac=f285195e9d3ac95b37ee187fd4752e23dc02618090499c307cf0f00807ee2355);
+  background-color: #ffffff;
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+.container {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
+
+h1 {
+  text-align: center;
+  color: #009000;
+}
+
+.container {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center;
+      text-align: center; */
+  /* min-height: 100vh; */
+}
+
+.button {
+  background-color: #009000;
+  border: #009000;
+  font-size: 1.5rem;
+  white-space: normal;
+  height: auto;
+}
+
+.messenger {
+  margin-top: 1.5rem;
+  background-color: #00b2ff;
+  border-color: #00b2ff;
+}
+
+.viber {
+  margin-top: 1.5rem;
+  background-color: #7360f2;
+  border-color: #7360f2;
+}
+
+.telegram {
+  margin-top: 1.5rem;
+  background-color: #0088cc;
+  border-color: #0088cc;
+}
+
+@media only screen and (min-width: 450px) {
+  body {
+    background-image: none;
+  }
+}

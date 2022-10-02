@@ -27,6 +27,7 @@ h3 {
   text-align: center;
   color: #009000;
 }
+
 .button {
   background-color: #009000;
   border: #009000;
@@ -46,3 +47,32 @@ h3 {
     background-image: none;
   }
 }
+
+/* loading spinner */
+.lds-dual-ring {
+  display: flex;
+  width: 80px;
+  height: 80px;
+  margin: auto;
+  min-height: 100vh;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: flex;
+  width: 64px;
+  height: 64px;
+  margin: auto;
+  border-radius: 50%;
+  border: 6px solid #009000;
+  border-color: #009000 transparent #009000 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* loading spinner */

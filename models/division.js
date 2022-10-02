@@ -6,6 +6,7 @@ const divisionSchema = new Schema(
   {
     psid: String,
     code: String,
+    platform: { type: String, enum: ["messenger", "viber", "telegram"] },
     method: {
       type: String,
       enum: ["manzil", "juz", "hizb"],
@@ -17,6 +18,7 @@ const divisionSchema = new Schema(
     readers: [
       {
         readersPsid: String,
+        platform: String,
         index: String,
       },
     ],

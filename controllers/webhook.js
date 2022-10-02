@@ -104,7 +104,7 @@ const greetings = catchAsync(async (senderPsid) => {
     {
       type: "web_url",
       title: text.createRoom,
-      url: `${process.env.WEBSITE_URL}/create-a-room?psid=${senderPsid}&platform=facebook`,
+      url: `${process.env.WEBSITE_URL}/create-a-room?psid=${senderPsid}&platform=messenger`,
       webview_height_ratio: "full",
       webview_share_button: "hide",
       messenger_extensions: true,
@@ -134,7 +134,7 @@ const joinRoom = catchAsync(async (senderPsid, roomCode) => {
     {
       type: "web_url",
       title: text.buttonJoinRoom,
-      url: `${process.env.WEBSITE_URL}/select-division/${roomCode}?psid=${senderPsid}&roomCode=${roomCode}&platform=facebook`,
+      url: `${process.env.WEBSITE_URL}/select-division/${roomCode}?psid=${senderPsid}&roomCode=${roomCode}&platform=messenger`,
       webview_height_ratio: "full",
       webview_share_button: "hide",
       messenger_extensions: true,
