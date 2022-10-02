@@ -7,6 +7,8 @@ const UrlMessage = require("viber-bot").Message.Url;
 const { text } = require("../utils/text");
 const { keyboardJson } = require("../utils/keyboardViber");
 
+const Division = require("../models/division");
+
 const bot = new ViberBot({
   authToken: process.env.VIBER_AUTH_TOKEN,
   name: "Takharoubt",
@@ -19,6 +21,15 @@ function say(response, message) {
       response.send(
         new TextMessage(message, keyboardJson(response.userProfile.id))
       );
+      resolve("success");
+    }, 1500);
+  });
+}
+
+function sendUrl(response, url) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      response.send(new UrlMessage(url, keyboardJson(response.userProfile.id)));
       resolve("success");
     }, 1500);
   });
@@ -44,7 +55,7 @@ bot.on(BotEvents.MESSAGE_RECEIVED, async (message, response) => {
 
 bot.onTextMessage(/./, async (message, response) => {
   const receivedWord = message.text;
-  console.log(receivedWord.match(/^[h](ttps|ttp)/)?.input);
+  // console.log(receivedWord.match(/^[h](ttps|ttp)/)?.input);
   switch (receivedWord.toLowerCase()) {
     case "hello":
       await say(response, text.marhaba);
@@ -58,6 +69,23 @@ bot.onTextMessage(/./, async (message, response) => {
       await say(response, text.how);
       break;
     case receivedWord.toLowerCase().match(/^[h](ttps|ttp)/)?.input:
+      break;
+    case receivedWord
+      .toLowerCase()
+      .match(/^(takharoubt)-(hizb|juz|manzil)-([a-zA-Z0-9]){5}/)?.input:
+      const exists = await Division.findOne({
+        code: receivedWord,
+        active: true,
+      });
+      if (exists) {
+        say(response, text.buttonJoinRoom);
+        sendUrl(
+          response,
+          `${process.env.WEBSITE_URL}/select-division/${roomCode}?psid=${response.userProfile.id}&roomCode=${roomCode}&platform=viber`
+        );
+      } else {
+        say(response, text.roomNotFound);
+      }
       break;
     default:
       await say(response, text.default);

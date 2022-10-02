@@ -134,7 +134,7 @@ const joinRoom = catchAsync(async (senderPsid, roomCode) => {
     {
       type: "web_url",
       title: text.buttonJoinRoom,
-      url: `${process.env.WEBSITE_URL}/select-division/${roomCode}?psid=${senderPsid}&roomCode=${roomCode}`,
+      url: `${process.env.WEBSITE_URL}/select-division/${roomCode}?psid=${senderPsid}&roomCode=${roomCode}&platform=facebook`,
       webview_height_ratio: "full",
       webview_share_button: "hide",
       messenger_extensions: true,
