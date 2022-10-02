@@ -77,7 +77,8 @@ bot.onTextMessage(/./, async (message, response) => {
         code: receivedWord.trim(),
         active: true,
       });
-      console.log(receivedWord);
+      console.log("received word: ", receivedWord);
+      console.log("exists: ", exists);
       if (exists) {
         say(response, text.buttonJoinRoom);
         sendUrl(
