@@ -83,7 +83,11 @@ bot.onTextMessage(/./, async (message, response) => {
         say(response, text.buttonJoinRoom);
         sendUrl(
           response,
-          `${process.env.WEBSITE_URL}/select-division/${roomCode}?psid=${response.userProfile.id}&roomCode=${roomCode}&platform=viber`
+          `${
+            process.env.WEBSITE_URL
+          }/select-division/${receivedWord.trim()}?psid=${
+            response.userProfile.id
+          }&roomCode=${receivedWord.trim()}&platform=viber`
         );
       } else {
         say(response, text.roomNotFound);
