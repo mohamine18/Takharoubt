@@ -74,9 +74,10 @@ bot.onTextMessage(/./, async (message, response) => {
       .toLowerCase()
       .match(/^(takharoubt)-(hizb|juz|manzil)-([a-zA-Z0-9]){5}/)?.input:
       const exists = await Division.findOne({
-        code: receivedWord,
+        code: receivedWord.trim(),
         active: true,
       });
+      console.log(receivedWord);
       if (exists) {
         say(response, text.buttonJoinRoom);
         sendUrl(
