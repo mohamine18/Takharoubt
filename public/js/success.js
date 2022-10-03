@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     case "messenger":
       link.classList.add("messenger");
       link.textContent = "ماسنجر";
-      link.href = "http://m.me/sharingamazing";
+      link.href = "http://m.me/takharoubt";
       break;
     case "viber":
       link.classList.add("viber");
